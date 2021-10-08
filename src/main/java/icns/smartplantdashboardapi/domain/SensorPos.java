@@ -10,12 +10,13 @@ public class SensorPos {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private Long id;
+    private Long posId;
 
     @Column
-    private String SsPosName;
+    private String PosName;
 
-
+    @Column
+    private String PosDtl;
 
 
 }
