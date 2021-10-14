@@ -1,20 +1,26 @@
 package icns.smartplantdashboardapi.domain;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@RequiredArgsConstructor
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SensorType {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long sensorTypeId;
+    private Long typeId;
 
-    @Column
-    private String sensorTypeName;
+    @Column(nullable = false, unique = true)
+    private String typeName;
 
-    @Column
-    private String sensorTypeEtc;
+    @Column(nullable = true)
+    private String typeDtl;
 }
