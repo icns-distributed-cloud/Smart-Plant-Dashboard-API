@@ -22,12 +22,4 @@ public class SensorPosRequest {
                 .build();
     }
 
-    @Override
-    public String toString() {
-        return "SensorPosRequest{" +
-                "posName='" + posName + '\'' +
-                ", posDtl='" + posDtl + '\'' +
-                ", posCode='" + posCode + '\'' +
-                '}';
-    }
 }

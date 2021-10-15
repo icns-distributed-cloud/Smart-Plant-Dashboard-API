@@ -31,16 +31,4 @@ public class SensorManageRequest {
 
     }
 
-    @Override
-    public String toString() {
-        return "SensorManageRequest{" +
-                "sensorPosId=" + sensorPosId +
-                ", ssName='" + ssName + '\'' +
-                ", ssDtl='" + ssDtl + '\'' +
-                ", ssContact='" + ssContact + '\'' +
-                ", ssContactExt='" + ssContactExt + '\'' +
-                ", ssContactPhone='" + ssContactPhone + '\'' +
-                ", ssPos=" + ssPos +
-                '}';
-    }
 }

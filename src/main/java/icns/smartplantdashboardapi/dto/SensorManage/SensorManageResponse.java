@@ -33,6 +33,4 @@ public class SensorManageResponse {
         this.ssPos = new SensorPosResponse(sensorManage.getSsPos());
    }
 
-
-
 }

@@ -2,9 +2,10 @@ package icns.smartplantdashboardapi.advice;
 
 import icns.smartplantdashboardapi.advice.exception.SensorManageNotFoundException;
 import icns.smartplantdashboardapi.advice.exception.SensorPosNotFoundException;
-import icns.smartplantdashboardapi.domain.SensorManage;
-import icns.smartplantdashboardapi.dto.CommonResponse;
+import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -12,18 +13,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
-    public CommonResponse<String> defaultException(Exception e){
-        log.info(String.valueOf(e));
-        return new CommonResponse<>(false, e.getMessage(), null);
+    public ResponseEntity<CommonResponse> defaultException(Exception e){
+        return new ResponseEntity<>(new CommonResponse(e.getMessage(),null), null, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(SensorPosNotFoundException.class)
-    public CommonResponse<String> sensorPosNotFoundException(SensorPosNotFoundException e){
-        return new CommonResponse<>(false, "해당 Id를 가진 센서 위치를 찾을 수 없습니다.", null);
+    public ResponseEntity<CommonResponse> sensorPosNotFoundException(SensorPosNotFoundException e){
+        String msg = "해당 Id를 가진 센서 위치를 찾을 수 없습니다.";
+        return new ResponseEntity<>(new CommonResponse(msg,null), null, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SensorManageNotFoundException.class)
-    public CommonResponse<String> sensorManageNotFoundException(SensorManageNotFoundException e){
-        return new CommonResponse<>(false, "해당 Id를 가진 센서를 찾을 수 없습니다.", null);
+    public ResponseEntity<CommonResponse> sensorManageNotFoundException(SensorManageNotFoundException e){
+        String msg = "해당 Id를 가진 센서를 찾을 수 없습니다.";
+        return new ResponseEntity<>(new CommonResponse<>(msg,null),null,HttpStatus.NOT_FOUND);
     }
 }

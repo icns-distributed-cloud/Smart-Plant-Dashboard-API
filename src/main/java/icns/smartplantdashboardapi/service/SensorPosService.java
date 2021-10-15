@@ -17,6 +17,11 @@ public class SensorPosService {
 
     private final SensorPosRepository sensorPosRepository;
 
+    @Transactional(readOnly = true)
+    public Page<SensorPosResponse> findAll(Pageable pageable){
+        Page<SensorPosResponse> sensorPosList = sensorPosRepository.findAll(pageable).map(SensorPosResponse::new);
+        return sensorPosList;
+    }
     /*
     @Transactional(readOnly = true)
     public List<SensorPosResponse> findAll(){
@@ -26,13 +31,6 @@ public class SensorPosService {
                 .collect(Collectors.toList());
     }
      */
-
-    @Transactional(readOnly = true)
-    public Page<SensorPosResponse> findAll(Pageable pageable){
-        Page<SensorPosResponse> sensorPosList = sensorPosRepository.findAll(pageable).map(SensorPosResponse::new);
-        return sensorPosList;
-    }
-
     @Transactional
     public Long save(SensorPosRequest sensorPosRequest){
         SensorPos saved = sensorPosRepository.save(sensorPosRequest.toEntity());
@@ -54,7 +52,9 @@ public class SensorPosService {
     }
 
     @Transactional
-    public void deleteById(Long posId){
+    public Long deleteById(Long posId){
+        Long deleted = sensorPosRepository.getById(posId).getPosId();
         sensorPosRepository.deleteById(posId);
+        return deleted;
     }
 }
