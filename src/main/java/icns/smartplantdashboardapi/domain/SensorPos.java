@@ -26,6 +26,9 @@ public class SensorPos {
     @Column(nullable = true)
     private String posDtl;
 
+    @Column(nullable = false, unique = true)
+    private String posCode;
+
     @Column
     private LocalDateTime createdAt;
 
@@ -33,9 +36,11 @@ public class SensorPos {
     public void createdAt(){
         this.createdAt = LocalDateTime.now();
     }
+
     public SensorPos update(SensorPosRequest sensorPosRequest){
         this.posName = sensorPosRequest.getPosName();
         this.posDtl = sensorPosRequest.getPosDtl();
+        this.posCode = sensorPosRequest.getPosCode();
         return this;
     }
 
@@ -45,6 +50,7 @@ public class SensorPos {
                 "posId=" + posId +
                 ", posName='" + posName + '\'' +
                 ", posDtl='" + posDtl + '\'' +
+                ", posCode='" + posCode + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
     }

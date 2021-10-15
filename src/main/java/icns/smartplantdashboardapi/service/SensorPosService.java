@@ -52,6 +52,7 @@ public class SensorPosService {
         sensorPos.update(sensorPosRequest);
         return new SensorPosResponse(sensorPos);
     }
+
     @Transactional
     public void deleteById(Long posId){
         sensorPosRepository.deleteById(posId);

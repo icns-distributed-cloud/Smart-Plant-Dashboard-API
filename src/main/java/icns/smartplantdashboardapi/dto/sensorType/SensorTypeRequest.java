@@ -12,12 +12,15 @@ import lombok.NoArgsConstructor;
 public class SensorTypeRequest {
     private String typeName;
     private String typeDtl;
-
+    private String typeCode;
+    private String typeColorCode;
 
     public SensorType toEntity(){
         return SensorType.builder()
                 .typeName(typeName)
                 .typeDtl(typeDtl)
+                .typeCode(typeCode)
+                .typeColorCode(typeColorCode)
                 .build();
     }
 }

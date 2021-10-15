@@ -27,6 +27,7 @@ public class SensorPosController {
     public CommonResponse<Long> save(@RequestBody SensorPosRequest sensorPosRequest){
         return new CommonResponse<>(true,null, sensorPosService.save(sensorPosRequest));
     }
+
     @GetMapping("/sensor-pos/{posId}")
     public CommonResponse<SensorPosResponse> findById(@PathVariable Long posId){
         return new CommonResponse<>(true, null, sensorPosService.findById(posId));
@@ -36,6 +37,7 @@ public class SensorPosController {
     public CommonResponse<SensorPosResponse> updateById(@PathVariable Long posId, @RequestBody SensorPosRequest sensorPosRequest){
         return new CommonResponse<>(true, null, sensorPosService.updateById(posId, sensorPosRequest));
     }
+
     @DeleteMapping("/sensor-pos/{posId}")
     public CommonResponse<String> deleteById(@PathVariable Long posId){
         sensorPosService.deleteById(posId);

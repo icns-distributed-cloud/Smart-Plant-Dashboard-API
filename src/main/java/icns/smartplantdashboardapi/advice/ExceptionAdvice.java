@@ -1,6 +1,8 @@
 package icns.smartplantdashboardapi.advice;
 
+import icns.smartplantdashboardapi.advice.exception.SensorManageNotFoundException;
 import icns.smartplantdashboardapi.advice.exception.SensorPosNotFoundException;
+import icns.smartplantdashboardapi.domain.SensorManage;
 import icns.smartplantdashboardapi.dto.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +18,12 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(SensorPosNotFoundException.class)
-    public CommonResponse<String> sensorPosnotFoundException(SensorPosNotFoundException e){
+    public CommonResponse<String> sensorPosNotFoundException(SensorPosNotFoundException e){
         return new CommonResponse<>(false, "해당 Id를 가진 센서 위치를 찾을 수 없습니다.", null);
+    }
+
+    @ExceptionHandler(SensorManageNotFoundException.class)
+    public CommonResponse<String> sensorManageNotFoundException(SensorManageNotFoundException e){
+        return new CommonResponse<>(false, "해당 Id를 가진 센서를 찾을 수 없습니다.", null);
     }
 }

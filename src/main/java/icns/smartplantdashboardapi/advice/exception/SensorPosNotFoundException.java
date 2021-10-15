@@ -4,4 +4,5 @@ public class SensorPosNotFoundException extends RuntimeException{
     public SensorPosNotFoundException(){
         super();
     }
+
 }
