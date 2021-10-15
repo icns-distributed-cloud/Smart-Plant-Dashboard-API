@@ -39,4 +39,13 @@ public class SensorPos {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "SensorPos{" +
+                "posId=" + posId +
+                ", posName='" + posName + '\'' +
+                ", posDtl='" + posDtl + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }
