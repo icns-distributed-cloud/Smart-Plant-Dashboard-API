@@ -3,6 +3,7 @@ package icns.smartplantdashboardapi.advice;
 import icns.smartplantdashboardapi.advice.exception.DuplicateException;
 import icns.smartplantdashboardapi.advice.exception.SensorManageNotFoundException;
 import icns.smartplantdashboardapi.advice.exception.SensorPosNotFoundException;
+import icns.smartplantdashboardapi.advice.exception.SensorTypeNotFoundException;
 import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.Msg;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
@@ -33,13 +34,21 @@ public class ExceptionAdvice {
         return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND,Msg.NOT_FOUND_SENSOR,null), null, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SensorTypeNotFoundException.class)
+    public ResponseEntity sensorTypeNotFoundException(SensorTypeNotFoundException e){
+        return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND, Msg.NOT_FOUND_SENSOR_TYPE, null), null, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(DuplicateException.class)
     public ResponseEntity duplicateException(DuplicateException e){
         return new ResponseEntity(CommonResponse.res(StatusCode.CONFLICT, Msg.DUPLICATE, null), null, HttpStatus.CONFLICT);
     }
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity mothodArgumentNotValidException(MethodArgumentNotValidException e){
         return new ResponseEntity(CommonResponse.res(StatusCode.BAD_REQUEST, Msg.REQUEST_NOT_VALID, null), null, HttpStatus.BAD_REQUEST);
     }
+
+
 }

@@ -16,12 +16,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SensorManage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long ssId;
 
-    @ManyToOne(targetEntity = SensorPos.class, fetch=FetchType.LAZY)
+    @ManyToOne(targetEntity = SensorType.class, fetch=FetchType.LAZY)
     @JoinColumn(name="sensortype_id")
     private SensorType ssType;
 
@@ -29,9 +30,11 @@ public class SensorManage {
     @JoinColumn(name="sensorpos_id", nullable = false)
     private SensorPos ssPos;
 
-    // 식별번호 자동 생성
     @Column
     private String ssName;
+
+    @Column
+    private String ssCode;
 
     @Column
     private String ssDtl;
@@ -53,8 +56,13 @@ public class SensorManage {
         this.createdAt = LocalDateTime.now();
     }
 
-    public SensorManage update(SensorManageRequest sensorManageRequest){
-        this.ssPos = sensorManageRequest.getSsPos();
+
+    public void createSensorCode(){
+        this.ssCode = ssPos.getPosCode() + "-"+ssType.getTypeCode()+"-"+ssId;
+    }
+    public SensorManage update(SensorManageRequest sensorManageRequest, SensorPos ssPos, SensorType ssType){
+        this.ssPos = ssPos;
+        this.ssType = ssType;
         this.ssName = sensorManageRequest.getSsName();
         this.ssDtl = sensorManageRequest.getSsDtl();
         this.ssContact = sensorManageRequest.getSsContact();
