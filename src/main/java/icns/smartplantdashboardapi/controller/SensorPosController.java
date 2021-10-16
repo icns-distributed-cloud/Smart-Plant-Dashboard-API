@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class SensorPosController {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK,  sensorPosService.findAll(pageable)), null, HttpStatus.OK);
     }
     @PostMapping("/sensor-pos")
-    public ResponseEntity save(@RequestBody SensorPosRequest sensorPosRequest){
+    public ResponseEntity save(@RequestBody @Valid SensorPosRequest sensorPosRequest){
         return new ResponseEntity(CommonResponse.res(StatusCode.CREATED, sensorPosService.save(sensorPosRequest)),null,HttpStatus.CREATED);
     }
 

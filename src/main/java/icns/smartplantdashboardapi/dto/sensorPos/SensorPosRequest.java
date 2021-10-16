@@ -5,13 +5,18 @@ import lombok.*;
 import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SensorPosRequest {
+    @NotEmpty
     private String posName;
+
     private String posDtl;
+
+    @NotEmpty
     private String posCode;
 
     public SensorPos toEntity(){

@@ -7,8 +7,10 @@ import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.Msg;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -34,5 +36,10 @@ public class ExceptionAdvice {
     @ExceptionHandler(DuplicateException.class)
     public ResponseEntity duplicateException(DuplicateException e){
         return new ResponseEntity(CommonResponse.res(StatusCode.CONFLICT, Msg.DUPLICATE, null), null, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity mothodArgumentNotValidException(MethodArgumentNotValidException e){
+        return new ResponseEntity(CommonResponse.res(StatusCode.BAD_REQUEST, Msg.REQUEST_NOT_VALID, null), null, HttpStatus.BAD_REQUEST);
     }
 }
