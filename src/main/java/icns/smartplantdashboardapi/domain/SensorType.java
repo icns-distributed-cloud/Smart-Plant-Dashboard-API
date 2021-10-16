@@ -1,20 +1,45 @@
 package icns.smartplantdashboardapi.domain;
 
-import lombok.RequiredArgsConstructor;
+import icns.smartplantdashboardapi.dto.sensorPos.SensorPosRequest;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@RequiredArgsConstructor
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SensorType {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long sensorTypeId;
+    private Long typeId;
+
+    @Column(nullable = false, unique = true)
+    private String typeName;
+
+    @Column(nullable = true)
+    private String typeDtl;
+
+    @Column(nullable = false, unique = true)
+    private String typeCode;
+
+    @Column(nullable = false, unique = true)
+    private String typeColorCode;
 
     @Column
-    private String sensorTypeName;
+    private LocalDateTime createdAt;
 
-    @Column
-    private String sensorTypeEtc;
+    @PrePersist
+    public void createdAt(){
+        this.createdAt = LocalDateTime.now();
+    }
+
+
+
 }
