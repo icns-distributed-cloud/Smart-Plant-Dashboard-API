@@ -1,5 +1,6 @@
 package icns.smartplantdashboardapi.service;
 
+import icns.smartplantdashboardapi.advice.exception.DuplicateException;
 import icns.smartplantdashboardapi.advice.exception.SensorPosNotFoundException;
 import icns.smartplantdashboardapi.domain.SensorPos;
 import icns.smartplantdashboardapi.dto.sensorPos.SensorPosRequest;
@@ -31,8 +32,21 @@ public class SensorPosService {
                 .collect(Collectors.toList());
     }
      */
+
+    private void validateDuplication(SensorPosRequest sensorPos){
+        sensorPosRepository.findByPosName(sensorPos.getPosName())
+                .ifPresent(m ->{
+                    throw new DuplicateException();
+                });
+        sensorPosRepository.findByPosCode(sensorPos.getPosCode())
+                .ifPresent(m->{
+                    throw new DuplicateException();
+                });
+    }
+
     @Transactional
     public Long save(SensorPosRequest sensorPosRequest){
+        validateDuplication(sensorPosRequest);
         SensorPos saved = sensorPosRepository.save(sensorPosRequest.toEntity());
         return saved.getPosId();
     }

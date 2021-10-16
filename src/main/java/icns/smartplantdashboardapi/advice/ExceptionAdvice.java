@@ -1,8 +1,10 @@
 package icns.smartplantdashboardapi.advice;
 
+import icns.smartplantdashboardapi.advice.exception.DuplicateException;
 import icns.smartplantdashboardapi.advice.exception.SensorManageNotFoundException;
 import icns.smartplantdashboardapi.advice.exception.SensorPosNotFoundException;
 import icns.smartplantdashboardapi.dto.common.CommonResponse;
+import icns.smartplantdashboardapi.dto.common.Msg;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,13 +22,17 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(SensorPosNotFoundException.class)
     public ResponseEntity sensorPosNotFoundException(SensorPosNotFoundException e){
-        String msg = "해당 Id를 가진 센서 위치를 찾을 수 없습니다.";
-        return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND,msg,null), null, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND, Msg.NOT_FOUND_SENSOR_POS,null), null, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SensorManageNotFoundException.class)
     public ResponseEntity sensorManageNotFoundException(SensorManageNotFoundException e){
-        String msg = "해당 Id를 가진 센서를 찾을 수 없습니다.";
-        return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND,msg,null), null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND,Msg.NOT_FOUND_SENSOR,null), null, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateException.class)
+    public ResponseEntity duplicateException(DuplicateException e){
+        return new ResponseEntity(CommonResponse.res(StatusCode.CONFLICT, Msg.DUPLICATE, null), null, HttpStatus.CONFLICT);
     }
 }
