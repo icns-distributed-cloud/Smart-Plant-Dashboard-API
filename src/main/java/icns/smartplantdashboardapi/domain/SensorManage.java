@@ -30,6 +30,10 @@ public class SensorManage {
     @JoinColumn(name="sensorpos_id", nullable = false)
     private SensorPos ssPos;
 
+    @OneToOne(cascade =  CascadeType.ALL)
+    @JoinColumn(name = "range_id")
+    private SensorRange sensorRange;
+
     @Column
     private String ssName;
 
@@ -51,6 +55,8 @@ public class SensorManage {
     @Column
     private LocalDateTime createdAt;
 
+
+
     @PrePersist
     public void createdAt(){
         this.createdAt = LocalDateTime.now();
@@ -59,6 +65,18 @@ public class SensorManage {
 
     public void createSensorCode(){
         this.ssCode = ssPos.getPosCode() + "-"+ssType.getTypeCode()+"-"+ssId;
+    }
+
+    public void createDefaultSensorRange(){
+        SensorRange sensorRange = SensorRange.builder()
+                                    .start(0)
+                                    .lev1(20)
+                                    .lev2(40)
+                                    .lev3(60)
+                                    .lev4(80)
+                                    .end(100)
+                                    .build();
+        this.sensorRange = sensorRange;
     }
     public SensorManage update(SensorManageRequest sensorManageRequest, SensorPos ssPos, SensorType ssType){
         this.ssPos = ssPos;

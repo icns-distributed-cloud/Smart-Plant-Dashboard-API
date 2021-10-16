@@ -32,6 +32,7 @@ public class SensorManageService {
         SensorType sensorType = sensorTypeRepository.findById(sensorManageRequest.getSensorTypeId()).orElseThrow(SensorTypeNotFoundException::new);
         SensorManage saved = sensorManageRepository.save(sensorManageRequest.toEntity(sensorPos, sensorType));
         saved.createSensorCode();
+        saved.createDefaultSensorRange();
         return saved.getSsId();
     }
 
