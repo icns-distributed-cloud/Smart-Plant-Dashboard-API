@@ -37,7 +37,7 @@ public class SensorManageController {
     }
 
     @GetMapping("/sensor-manage")
-    public ResponseEntity find(@PathVariable(value="posId", required = false) Long posId, final Pageable pageable){
+    public ResponseEntity find(@RequestParam(value="posId", required = false) Long posId, final Pageable pageable){
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorManageService.find(posId, pageable)), null, HttpStatus.OK);
     }
 

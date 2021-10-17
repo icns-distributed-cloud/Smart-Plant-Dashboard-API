@@ -19,9 +19,9 @@ public class SensorRangeController {
 
     private final SensorRangeService sensorRangeService;
 
-    @GetMapping("/sensor-range/{posId}")
+    @GetMapping("/sensor-range")
     public ResponseEntity findByPosId(
-            @PathVariable("posId") Long posId,
+            @RequestParam("posId") Long posId,
             final Pageable pageable){
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorRangeService.findByPosId(posId, pageable)), null, HttpStatus.OK);
     }
