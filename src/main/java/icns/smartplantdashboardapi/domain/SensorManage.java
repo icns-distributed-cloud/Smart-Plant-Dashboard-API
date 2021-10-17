@@ -1,7 +1,7 @@
 package icns.smartplantdashboardapi.domain;
 
-import icns.smartplantdashboardapi.dto.SensorManage.SensorManageRequest;
-import icns.smartplantdashboardapi.dto.sensorPos.SensorPosRequest;
+import icns.smartplantdashboardapi.dto.sensorManage.SensorManageRequest;
+import icns.smartplantdashboardapi.dto.sensorManage.range.SensorRangeRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,12 +16,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SensorManage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long ssId;
 
-    @ManyToOne(targetEntity = SensorPos.class, fetch=FetchType.LAZY)
+    @ManyToOne(targetEntity = SensorType.class, fetch=FetchType.LAZY)
     @JoinColumn(name="sensortype_id")
     private SensorType ssType;
 
@@ -29,9 +30,11 @@ public class SensorManage {
     @JoinColumn(name="sensorpos_id", nullable = false)
     private SensorPos ssPos;
 
-    // 식별번호 자동 생성
     @Column
     private String ssName;
+
+    @Column
+    private String ssCode;
 
     @Column
     private String ssDtl;
@@ -48,13 +51,37 @@ public class SensorManage {
     @Column
     private LocalDateTime createdAt;
 
+    // SensorRange
+    @Column
+    private float rstart;
+
+    @Column
+    private float rlev1;
+
+    @Column
+    private float rlev2;
+
+    @Column
+    private float rlev3;
+
+    @Column
+    private float rlev4;
+
+    @Column
+    private float rend;
+
     @PrePersist
     public void createdAt(){
         this.createdAt = LocalDateTime.now();
     }
 
-    public SensorManage update(SensorManageRequest sensorManageRequest){
-        this.ssPos = sensorManageRequest.getSsPos();
+    public void createSensorCode(){
+        this.ssCode = ssPos.getPosCode() + "-"+ssType.getTypeCode()+"-"+ssId;
+    }
+
+    public SensorManage update(SensorManageRequest sensorManageRequest, SensorPos ssPos, SensorType ssType){
+        this.ssPos = ssPos;
+        this.ssType = ssType;
         this.ssName = sensorManageRequest.getSsName();
         this.ssDtl = sensorManageRequest.getSsDtl();
         this.ssContact = sensorManageRequest.getSsContact();
@@ -62,5 +89,16 @@ public class SensorManage {
         this.ssContactPhone = sensorManageRequest.getSsContactPhone();
         return this;
     }
+
+    public SensorManage updateRange(SensorRangeRequest sensorRangeRequest){
+        this.rstart = sensorRangeRequest.getRstart();
+        this.rlev1 = sensorRangeRequest.getRlev1();
+        this.rlev2 = sensorRangeRequest.getRlev2();
+        this.rlev3 = sensorRangeRequest.getRlev3();
+        this.rlev4 = sensorRangeRequest.getRlev4();
+        this.rend = sensorRangeRequest.getRend();
+        return this;
+    }
+
 
 }

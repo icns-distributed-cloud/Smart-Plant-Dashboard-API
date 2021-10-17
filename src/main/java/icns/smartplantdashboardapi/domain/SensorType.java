@@ -1,6 +1,7 @@
 package icns.smartplantdashboardapi.domain;
 
 import icns.smartplantdashboardapi.dto.sensorPos.SensorPosRequest;
+import icns.smartplantdashboardapi.dto.sensorType.SensorTypeRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,6 +39,14 @@ public class SensorType {
     @PrePersist
     public void createdAt(){
         this.createdAt = LocalDateTime.now();
+    }
+
+    public SensorType update(SensorTypeRequest sensorTypeRequest){
+        this.typeName = sensorTypeRequest.getTypeName();
+        this.typeCode = sensorTypeRequest.getTypeCode();
+        this.typeDtl = sensorTypeRequest.getTypeDtl();
+        this.typeColorCode = sensorTypeRequest.getTypeColorCode();
+        return this;
     }
 
 

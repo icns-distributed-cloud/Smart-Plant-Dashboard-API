@@ -6,13 +6,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SensorTypeRequest {
+    @NotEmpty
     private String typeName;
+
     private String typeDtl;
+
+    @NotEmpty
     private String typeCode;
+
+    @NotEmpty
     private String typeColorCode;
 
     public SensorType toEntity(){
