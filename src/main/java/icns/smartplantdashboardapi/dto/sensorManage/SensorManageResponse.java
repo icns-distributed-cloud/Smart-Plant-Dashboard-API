@@ -1,16 +1,11 @@
-package icns.smartplantdashboardapi.dto.SensorManage;
+package icns.smartplantdashboardapi.dto.sensorManage;
 
 import icns.smartplantdashboardapi.domain.SensorManage;
-import icns.smartplantdashboardapi.domain.SensorPos;
-import icns.smartplantdashboardapi.domain.SensorType;
 import icns.smartplantdashboardapi.dto.sensorPos.SensorPosResponse;
 import icns.smartplantdashboardapi.dto.sensorType.SensorTypeResponse;
-import icns.smartplantdashboardapi.repository.SensorManageRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor

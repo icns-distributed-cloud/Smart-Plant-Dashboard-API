@@ -1,9 +1,8 @@
-package icns.smartplantdashboardapi.dto.SensorManage;
+package icns.smartplantdashboardapi.dto.sensorManage;
 
 import icns.smartplantdashboardapi.domain.SensorManage;
 import icns.smartplantdashboardapi.domain.SensorPos;
 import icns.smartplantdashboardapi.domain.SensorType;
-import icns.smartplantdashboardapi.repository.SensorTypeRepository;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -39,6 +38,12 @@ public class SensorManageRequest {
                 .ssContactPhone(ssContactPhone)
                 .ssPos(sensorPos)
                 .ssType(sensorType)
+                .rstart(0)
+                .rlev1(20)
+                .rlev2(40)
+                .rlev3(60)
+                .rlev4(80)
+                .rend(100)
                 .build();
 
     }

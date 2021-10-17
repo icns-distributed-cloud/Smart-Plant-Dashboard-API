@@ -1,16 +1,17 @@
 package icns.smartplantdashboardapi.controller;
 
-import icns.smartplantdashboardapi.dto.SensorManage.SensorManageRequest;
+import icns.smartplantdashboardapi.dto.sensorManage.SensorManageRequest;
 import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
 import icns.smartplantdashboardapi.service.SensorManageService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = {"센서 통합 관리"})
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

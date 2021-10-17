@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Api(tags = {"SensorPos"})
+@Api(tags = {"센서 위치 관리"})
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

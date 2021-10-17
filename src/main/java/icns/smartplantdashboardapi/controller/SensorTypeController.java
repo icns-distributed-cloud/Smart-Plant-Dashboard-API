@@ -4,6 +4,7 @@ import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
 import icns.smartplantdashboardapi.dto.sensorType.SensorTypeRequest;
 import icns.smartplantdashboardapi.service.SensorTypeService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Api(tags = {"센서 종류 관리"})
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
