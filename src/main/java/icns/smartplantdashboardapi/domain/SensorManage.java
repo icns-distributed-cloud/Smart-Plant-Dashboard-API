@@ -31,9 +31,6 @@ public class SensorManage {
     private SensorPos ssPos;
 
     @Column
-    private String ssName;
-
-    @Column
     private String ssCode;
 
     @Column
@@ -82,7 +79,6 @@ public class SensorManage {
     public SensorManage update(SensorManageRequest sensorManageRequest, SensorPos ssPos, SensorType ssType){
         this.ssPos = ssPos;
         this.ssType = ssType;
-        this.ssName = sensorManageRequest.getSsName();
         this.ssDtl = sensorManageRequest.getSsDtl();
         this.ssContact = sensorManageRequest.getSsContact();
         this.ssContactExt = sensorManageRequest.getSsContactExt();
