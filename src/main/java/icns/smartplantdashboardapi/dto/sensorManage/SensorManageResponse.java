@@ -23,7 +23,6 @@ public class SensorManageResponse {
 
     public SensorManageResponse(SensorManage sensorManage){
         this.ssId = sensorManage.getSsId();
-        this.ssName= sensorManage.getSsName();
         this.ssDtl = sensorManage.getSsDtl();
         this.ssContact = sensorManage.getSsContact();
         this.ssContactExt = sensorManage.getSsContactExt();
