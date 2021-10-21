@@ -7,6 +7,8 @@ import icns.smartplantdashboardapi.domain.SensorManage;
 import icns.smartplantdashboardapi.domain.SensorPos;
 import icns.smartplantdashboardapi.dto.sensorData.SensorDataRequest;
 import icns.smartplantdashboardapi.dto.sensorData.SensorDataResponse;
+import icns.smartplantdashboardapi.dto.socket.sensorData.SocketSensorDataRequest;
+import icns.smartplantdashboardapi.dto.socket.sensorData.SocketSensorDataResponse;
 import icns.smartplantdashboardapi.repository.SensorDataRepository;
 import icns.smartplantdashboardapi.repository.SensorManageRepository;
 import icns.smartplantdashboardapi.repository.SensorPosRepository;
@@ -29,6 +31,7 @@ public class SensorDataService {
     @Transactional
     public Long save(SensorDataRequest sensorDataRequest){
         SensorManage sensorManage = sensorManageRepository.findById(sensorDataRequest.getSensorManageId()).orElseThrow(SensorManageNotFoundException::new);
+        System.out.println(sensorManage);
         SensorData saved = sensorDataRepository.save(sensorDataRequest.toEntity(sensorManage));
         return saved.getDataId();
     }
@@ -39,5 +42,10 @@ public class SensorDataService {
         return sensorDataRepository.findBySensorManage_SsPos(ssPos).stream().map(SensorDataResponse::new).collect(Collectors.toList());
     }
 
-
+    @Transactional(readOnly = true)
+    public SocketSensorDataResponse sendData(Long ssId){
+        SensorManage sensorManage = sensorManageRepository.findById(ssId).get();
+        SensorData sensorData = sensorDataRepository.findTop1BySensorManageOrderByCreatedAtDesc(sensorManage);
+        return new SocketSensorDataResponse(sensorData.getSensorManage().getSsId(), sensorData.getInputData());
+    }
 }
