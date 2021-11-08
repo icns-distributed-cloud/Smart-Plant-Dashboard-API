@@ -20,7 +20,7 @@ public class SensorManageSimpleResponse {
 
     public SensorManageSimpleResponse(SensorManage sensorManage){
         this.ssId = sensorManage.getSsId();
-        this.ssCode = sensorManage.getSsCode();
+        this.ssCode = sensorManage.createSensorCode();
         this.posId = sensorManage.getSsPos().getPosId();
         this.typeId =sensorManage.getSsType().getTypeId();
     }

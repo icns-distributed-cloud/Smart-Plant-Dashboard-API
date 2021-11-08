@@ -39,7 +39,7 @@ public class SensorRangeResponse {
         this.rlev3 = sensorManage.getRlev3();
         this.rlev4 = sensorManage.getRlev4();
         this.rend = sensorManage.getRend();
-        this.ssCode = sensorManage.getSsCode();
+        this.ssCode = sensorManage.createSensorCode();
         this.sensorPosId = sensorManage.getSsPos().getPosId();
         this.sensorTypeName = sensorManage.getSsType().getTypeName();
     }
