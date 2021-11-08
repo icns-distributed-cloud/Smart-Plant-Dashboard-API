@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,12 +32,6 @@ public class SensorManage {
     private SensorPos ssPos;
 
     @Column
-    private String ssCode;
-
-    @Column
-    private String ssDtl;
-
-    @Column
     private String ssContact;
 
     @Column
@@ -45,41 +40,32 @@ public class SensorManage {
     @Column
     private String ssContactPhone;
 
-    @Column
-    private LocalDateTime createdAt;
-
     // SensorRange
-    @Column
+    @ColumnDefault("0")
     private float rstart;
 
-    @Column
+    @ColumnDefault("20")
     private float rlev1;
 
-    @Column
+    @ColumnDefault("40")
     private float rlev2;
 
-    @Column
+    @ColumnDefault("60")
     private float rlev3;
 
-    @Column
+    @ColumnDefault("80")
     private float rlev4;
 
-    @Column
+    @ColumnDefault("100")
     private float rend;
 
-    @PrePersist
-    public void createdAt(){
-        this.createdAt = LocalDateTime.now();
-    }
-
-    public void createSensorCode(){
-        this.ssCode = ssPos.getPosCode() + "-"+ssType.getTypeCode()+"-"+ssId;
+    public String createSensorCode(){
+        return ssPos.getPosCode() + "-"+ssType.getTypeCode()+"-"+ssId;
     }
 
     public SensorManage update(SensorManageRequest sensorManageRequest, SensorPos ssPos, SensorType ssType){
         this.ssPos = ssPos;
         this.ssType = ssType;
-        this.ssDtl = sensorManageRequest.getSsDtl();
         this.ssContact = sensorManageRequest.getSsContact();
         this.ssContactExt = sensorManageRequest.getSsContactExt();
         this.ssContactPhone = sensorManageRequest.getSsContactPhone();

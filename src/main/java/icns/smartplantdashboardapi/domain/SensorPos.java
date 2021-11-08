@@ -29,13 +29,6 @@ public class SensorPos {
     @Column(nullable = false, unique = true)
     private String posCode;
 
-    @Column
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    public void createdAt(){
-        this.createdAt = LocalDateTime.now();
-    }
 
     public SensorPos update(SensorPosRequest sensorPosRequest){
         this.posName = sensorPosRequest.getPosName();
@@ -44,14 +37,4 @@ public class SensorPos {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "SensorPos{" +
-                "posId=" + posId +
-                ", posName='" + posName + '\'' +
-                ", posDtl='" + posDtl + '\'' +
-                ", posCode='" + posCode + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
-    }
 }

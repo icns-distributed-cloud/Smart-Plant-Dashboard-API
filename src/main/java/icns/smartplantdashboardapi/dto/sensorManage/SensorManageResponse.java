@@ -15,7 +15,6 @@ public class SensorManageResponse {
     private SensorPosResponse ssPos;
     private SensorTypeResponse ssType;
     private String ssName;
-    private String ssDtl;
     private String ssContact;
     private String ssContactExt;
     private String ssContactPhone;
@@ -23,10 +22,9 @@ public class SensorManageResponse {
 
     public SensorManageResponse(SensorManage sensorManage){
         this.ssId = sensorManage.getSsId();
-        this.ssDtl = sensorManage.getSsDtl();
         this.ssContact = sensorManage.getSsContact();
         this.ssContactExt = sensorManage.getSsContactExt();
-        this.ssCode = sensorManage.getSsCode();
+        this.ssCode = sensorManage.createSensorCode();
         this.ssContactPhone = sensorManage.getSsContactPhone();
         this.ssPos = new SensorPosResponse(sensorManage.getSsPos());
         this.ssType = new SensorTypeResponse(sensorManage.getSsType());

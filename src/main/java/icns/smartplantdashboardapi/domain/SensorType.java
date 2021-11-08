@@ -33,14 +33,6 @@ public class SensorType {
     @Column(nullable = false, unique = true)
     private String typeColorCode;
 
-    @Column
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    public void createdAt(){
-        this.createdAt = LocalDateTime.now();
-    }
-
     public SensorType update(SensorTypeRequest sensorTypeRequest){
         this.typeName = sensorTypeRequest.getTypeName();
         this.typeCode = sensorTypeRequest.getTypeCode();

@@ -20,7 +20,7 @@ public class SensorData {
     private Long dataId;
 
     @ManyToOne(targetEntity = SensorManage.class)
-    @JoinColumn(name = "sensormanage_id")
+    @JoinColumn(name = "ss_id")
     private SensorManage sensorManage;
 
     @Column
