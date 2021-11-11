@@ -7,14 +7,11 @@ import icns.smartplantdashboardapi.domain.SensorManage;
 import icns.smartplantdashboardapi.domain.SensorPos;
 import icns.smartplantdashboardapi.dto.sensorData.SensorDataRequest;
 import icns.smartplantdashboardapi.dto.sensorData.SensorDataResponse;
-import icns.smartplantdashboardapi.dto.socket.sensorData.SocketSensorDataRequest;
 import icns.smartplantdashboardapi.dto.socket.sensorData.SocketSensorDataResponse;
 import icns.smartplantdashboardapi.repository.SensorDataRepository;
 import icns.smartplantdashboardapi.repository.SensorManageRepository;
 import icns.smartplantdashboardapi.repository.SensorPosRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,10 +28,10 @@ public class SensorDataService {
     @Transactional
     public Long save(SensorDataRequest sensorDataRequest){
         SensorManage sensorManage = sensorManageRepository.findById(sensorDataRequest.getSensorManageId()).orElseThrow(SensorManageNotFoundException::new);
-        System.out.println(sensorManage);
         SensorData saved = sensorDataRepository.save(sensorDataRequest.toEntity(sensorManage));
         return saved.getDataId();
     }
+
 
     @Transactional(readOnly = true)
     public List<SensorDataResponse> findByPosId(Long posId){
