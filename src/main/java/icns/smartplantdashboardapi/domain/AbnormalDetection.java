@@ -27,9 +27,6 @@ public class AbnormalDetection {
     private String state;
 
     @Column
-    private float data;
-
-    @Column
     private LocalDateTime createdAt;
 
     @PrePersist

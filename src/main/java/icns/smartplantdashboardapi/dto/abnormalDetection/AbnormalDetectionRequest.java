@@ -18,14 +18,11 @@ public class AbnormalDetectionRequest {
     @NotEmpty
     private String state;
 
-    @NotEmpty
-    private float data;
 
     public AbnormalDetection toEntity(SensorManage sensorManage){
         return AbnormalDetection.builder()
                 .sensorManage(sensorManage)
                 .state(state)
-                .data(data)
                 .build();
     }
 }
