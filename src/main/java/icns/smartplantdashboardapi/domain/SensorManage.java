@@ -2,6 +2,7 @@ package icns.smartplantdashboardapi.domain;
 
 import icns.smartplantdashboardapi.dto.sensorManage.SensorManageRequest;
 import icns.smartplantdashboardapi.dto.sensorManage.range.SensorRangeRequest;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +41,10 @@ public class SensorManage {
     @Column
     private String ssContactPhone;
 
+    // SensorState
+    @ColumnDefault("0")
+    private Integer sensorState;
+
     // SensorRange
     @ColumnDefault("0")
     private float rstart;
@@ -63,6 +68,7 @@ public class SensorManage {
         return ssPos.getPosCode() + "-"+ssType.getTypeCode()+"-"+ssId;
     }
 
+
     public SensorManage update(SensorManageRequest sensorManageRequest, SensorPos ssPos, SensorType ssType){
         this.ssPos = ssPos;
         this.ssType = ssType;
@@ -70,6 +76,21 @@ public class SensorManage {
         this.ssContactExt = sensorManageRequest.getSsContactExt();
         this.ssContactPhone = sensorManageRequest.getSsContactPhone();
         return this;
+    }
+
+    public Integer setSensorState(float data){
+        if(data > this.rlev4){
+            this.sensorState = EState.SERIOUS.ordinal();
+       }else if(data > this.rlev3){
+            this.sensorState = EState.WANRNING.ordinal();
+        }else if(data > this.rlev2){
+            this.sensorState = EState.CAUTION.ordinal();
+        }else if(data > this.rlev1) {
+            this.sensorState = EState.ATTENTION.ordinal();
+        }else{
+            this.sensorState = EState.SAFE.ordinal();
+        }
+        return this.sensorState;
     }
 
     public SensorManage updateRange(SensorRangeRequest sensorRangeRequest){

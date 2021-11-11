@@ -24,13 +24,18 @@ public class AbnormalDetection {
     private SensorManage sensorManage;
 
     @Column
-    private String state;
+    private LocalDateTime createdAt;
 
     @Column
-    private LocalDateTime createdAt;
+    private Integer sensorState;
 
     @PrePersist
     public void createdAt(){
         this.createdAt = LocalDateTime.now();
+    }
+
+    public AbnormalDetection(SensorManage sensorManage, Integer state) {
+        this.sensorManage = sensorManage;
+        this.sensorState = state;
     }
 }

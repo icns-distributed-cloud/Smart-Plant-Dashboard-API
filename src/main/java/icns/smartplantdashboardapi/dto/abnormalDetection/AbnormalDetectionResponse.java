@@ -1,6 +1,7 @@
 package icns.smartplantdashboardapi.dto.abnormalDetection;
 
 import icns.smartplantdashboardapi.domain.AbnormalDetection;
+import icns.smartplantdashboardapi.domain.EState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class AbnormalDetectionResponse {
     private LocalDateTime createdAt;
 
     @NotEmpty
-    private String state;
+    private Integer sensorState;
 
     @NotEmpty
     private Long posId;
@@ -28,7 +29,7 @@ public class AbnormalDetectionResponse {
 
     public AbnormalDetectionResponse(AbnormalDetection abnormalDetection){
         this.createdAt = abnormalDetection.getCreatedAt();
-        this.state = abnormalDetection.getState();
+        this.sensorState = abnormalDetection.getSensorState();
         this.posId = abnormalDetection.getSensorManage().getSsPos().getPosId();
         this.ssCode = abnormalDetection.getSensorManage().createSensorCode();
     }
