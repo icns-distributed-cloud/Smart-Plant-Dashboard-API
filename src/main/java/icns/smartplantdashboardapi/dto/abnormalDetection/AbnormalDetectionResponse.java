@@ -25,15 +25,12 @@ public class AbnormalDetectionResponse {
     @NotEmpty
     private String ssCode;
 
-    @NotEmpty
-    private float data;
 
     public AbnormalDetectionResponse(AbnormalDetection abnormalDetection){
         this.createdAt = abnormalDetection.getCreatedAt();
         this.state = abnormalDetection.getState();
         this.posId = abnormalDetection.getSensorManage().getSsPos().getPosId();
         this.ssCode = abnormalDetection.getSensorManage().createSensorCode();
-        this.data = abnormalDetection.getData();
     }
 
 
