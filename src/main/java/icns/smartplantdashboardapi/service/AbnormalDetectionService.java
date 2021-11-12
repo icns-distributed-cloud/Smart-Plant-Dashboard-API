@@ -4,7 +4,7 @@ import icns.smartplantdashboardapi.advice.exception.SensorManageNotFoundExceptio
 import icns.smartplantdashboardapi.domain.AbnormalDetection;
 import icns.smartplantdashboardapi.domain.SensorManage;
 import icns.smartplantdashboardapi.dto.abnormalDetection.AbnormalDetectionRequest;
-import icns.smartplantdashboardapi.dto.abnormalDetection.AbnormalDetectionResponse;
+import icns.smartplantdashboardapi.dto.abnormalDetection.socket.SocketAbnormalDetectionResponse;
 import icns.smartplantdashboardapi.repository.AbnormalDetectionRepository;
 import icns.smartplantdashboardapi.repository.SensorManageRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +28,13 @@ public class AbnormalDetectionService {
     }
 
     @Transactional(readOnly = true)
-    public Page<AbnormalDetectionResponse> find(Long posId, Pageable pageable){
-        Page<AbnormalDetectionResponse> abnormalDetectionList;
+    public Page<SocketAbnormalDetectionResponse> find(Long posId, Pageable pageable){
+        Page<SocketAbnormalDetectionResponse> abnormalDetectionList;
 
         if(posId == null){
-            abnormalDetectionList = abnormalDetectionRepository.findAll(pageable).map(AbnormalDetectionResponse::new);
+            abnormalDetectionList = abnormalDetectionRepository.findAll(pageable).map(SocketAbnormalDetectionResponse::new);
         }else{
-            abnormalDetectionList = abnormalDetectionRepository.findBySensorManage_SsPos_PosId(posId, pageable).map(AbnormalDetectionResponse::new);
+            abnormalDetectionList = abnormalDetectionRepository.findBySensorManage_SsPos_PosId(posId, pageable).map(SocketAbnormalDetectionResponse::new);
         }
         return abnormalDetectionList;
     }

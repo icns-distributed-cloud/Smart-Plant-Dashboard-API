@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.*;
 public class AbnormalDetectionController {
     private final AbnormalDetectionService abnormalDetectionService;
 
+    /*
     @PostMapping("/abnormal-detection")
     public ResponseEntity save(@RequestBody AbnormalDetectionRequest abnormalDetectionRequest){
         return new ResponseEntity(CommonResponse.res(StatusCode.CREATED, abnormalDetectionService.save(abnormalDetectionRequest)),null, HttpStatus.CREATED);
     }
+
+     */
 
     @GetMapping("/abnormal-detection")
     public ResponseEntity find(@RequestParam(value="posId", required = false) Long posId, final Pageable pageable){

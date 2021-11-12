@@ -1,10 +1,7 @@
 package icns.smartplantdashboardapi.controller.socket;
 
-import icns.smartplantdashboardapi.domain.AbnormalDetection;
-import icns.smartplantdashboardapi.dto.abnormalDetection.AbnormalDetectionRequest;
-import icns.smartplantdashboardapi.dto.abnormalDetection.AbnormalDetectionResponse;
-import icns.smartplantdashboardapi.dto.socket.sensorData.SocketSensorDataRequest;
-import icns.smartplantdashboardapi.dto.socket.sensorData.SocketSensorDataResponse;
+import icns.smartplantdashboardapi.dto.abnormalDetection.socket.SocketAbnormalDetectionResponse;
+import icns.smartplantdashboardapi.dto.sensorData.socket.SocketSensorDataResponse;
 import icns.smartplantdashboardapi.service.SensorDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -28,8 +25,8 @@ public class SocketController {
 
     @MessageMapping("/check")
     @SendTo("/alert")
-    public AbnormalDetectionResponse abnormalSocketHandler(AbnormalDetectionResponse abnormalDetectionResponse){
-        return abnormalDetectionResponse;
+    public SocketAbnormalDetectionResponse abnormalSocketHandler(SocketAbnormalDetectionResponse socketAbnormalDetectionResponse){
+        return socketAbnormalDetectionResponse;
 
     }
 

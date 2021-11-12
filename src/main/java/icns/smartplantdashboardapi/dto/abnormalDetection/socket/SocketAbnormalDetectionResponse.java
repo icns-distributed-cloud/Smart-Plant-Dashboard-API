@@ -1,4 +1,4 @@
-package icns.smartplantdashboardapi.dto.abnormalDetection;
+package icns.smartplantdashboardapi.dto.abnormalDetection.socket;
 
 import icns.smartplantdashboardapi.domain.AbnormalDetection;
 import icns.smartplantdashboardapi.domain.EState;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AbnormalDetectionResponse {
+public class SocketAbnormalDetectionResponse {
     @NotEmpty
     private LocalDateTime createdAt;
 
@@ -26,12 +26,16 @@ public class AbnormalDetectionResponse {
     @NotEmpty
     private String ssCode;
 
+    @NotEmpty
+    private String posName;
 
-    public AbnormalDetectionResponse(AbnormalDetection abnormalDetection){
+
+    public SocketAbnormalDetectionResponse(AbnormalDetection abnormalDetection){
         this.createdAt = abnormalDetection.getCreatedAt();
         this.sensorState = abnormalDetection.getSensorState();
         this.posId = abnormalDetection.getSensorManage().getSsPos().getPosId();
         this.ssCode = abnormalDetection.getSensorManage().createSensorCode();
+        this.posName = abnormalDetection.getSensorManage().getSsPos().getPosName();
     }
 
 

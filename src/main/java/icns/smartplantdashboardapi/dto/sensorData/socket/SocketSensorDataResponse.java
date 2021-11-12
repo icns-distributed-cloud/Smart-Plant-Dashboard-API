@@ -1,4 +1,4 @@
-package icns.smartplantdashboardapi.dto.socket.sensorData;
+package icns.smartplantdashboardapi.dto.sensorData.socket;
 
 import icns.smartplantdashboardapi.domain.SensorData;
 import lombok.AllArgsConstructor;
