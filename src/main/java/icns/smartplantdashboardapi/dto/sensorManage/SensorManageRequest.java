@@ -38,6 +38,7 @@ public class SensorManageRequest {
                 .rlev3(60)
                 .rlev4(80)
                 .rend(100)
+                .sensorState(0)
                 .build();
 
     }
