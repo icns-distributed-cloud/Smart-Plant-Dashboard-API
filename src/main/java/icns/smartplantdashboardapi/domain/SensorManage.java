@@ -42,26 +42,26 @@ public class SensorManage {
     private String ssContactPhone;
 
     // SensorState
-    @ColumnDefault("0")
+    @Column
     private Integer sensorState;
 
     // SensorRange
-    @ColumnDefault("0")
+    @Column
     private float rstart;
 
-    @ColumnDefault("20")
+    @Column
     private float rlev1;
 
-    @ColumnDefault("40")
+    @Column
     private float rlev2;
 
-    @ColumnDefault("60")
+    @Column
     private float rlev3;
 
-    @ColumnDefault("80")
+    @Column
     private float rlev4;
 
-    @ColumnDefault("100")
+    @Column
     private float rend;
 
     public String createSensorCode(){
