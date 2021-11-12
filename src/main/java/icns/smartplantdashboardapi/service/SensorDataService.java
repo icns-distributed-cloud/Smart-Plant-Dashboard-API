@@ -33,15 +33,23 @@ public class SensorDataService {
     @Transactional
     public Long save(SensorDataRequest sensorDataRequest){
         SensorManage sensorManage = sensorManageRepository.findById(sensorDataRequest.getSensorManageId()).orElseThrow(SensorManageNotFoundException::new);
+
+        // update sensor state
+        Integer pastState = sensorManage.getSensorState();
+        sensorManage.setSensorState(sensorDataRequest.getInputData());
+
+        // save
         SensorData saved = sensorDataRepository.save(sensorDataRequest.toEntity(sensorManage));
-        detectAbnormal(sensorManage,sensorDataRequest.getInputData());
+
+        // detect
+        detectAbnormal(pastState, sensorManage);
+
         return saved.getDataId();
     }
 
     @Transactional
-    public void detectAbnormal(SensorManage sensorManage, float data){
-        Integer pastState = sensorManage.getSensorState();
-        sensorManage.setSensorState(data);
+    public void detectAbnormal(Integer pastState, SensorManage sensorManage){
+
         Integer currState = sensorManage.getSensorState();
 
         if( pastState < currState){
@@ -67,6 +75,6 @@ public class SensorDataService {
     public SocketSensorDataResponse sendData(Long ssId){
         SensorManage sensorManage = sensorManageRepository.findById(ssId).get();
         SensorData sensorData = sensorDataRepository.findTop1BySensorManageOrderByCreatedAtDesc(sensorManage);
-        return new SocketSensorDataResponse(sensorData.getSensorManage().getSsId(), sensorData.getInputData());
+        return new SocketSensorDataResponse(sensorData);
     }
 }

@@ -1,5 +1,6 @@
 package icns.smartplantdashboardapi.dto.socket.sensorData;
 
+import icns.smartplantdashboardapi.domain.SensorData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,12 @@ public class SocketSensorDataResponse {
 
     private LocalDateTime createdAt;
 
-    public SocketSensorDataResponse(Long ssId, float inputData){
-        this.ssId = ssId;
-        this.inputData = inputData;
-        this.createdAt = LocalDateTime.now();
+    private Integer sensorState;
+
+    public SocketSensorDataResponse(SensorData sensorData){
+        this.ssId = sensorData.getSensorManage().getSsId();
+        this.inputData = sensorData.getInputData();
+        this.createdAt = sensorData.getCreatedAt();
+        this.sensorState = sensorData.getSensorManage().getSensorState();
     }
 }

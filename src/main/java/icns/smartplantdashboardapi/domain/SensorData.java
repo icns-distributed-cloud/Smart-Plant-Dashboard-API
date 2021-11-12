@@ -35,13 +35,4 @@ public class SensorData {
         this.createdAt = LocalDateTime.now();
     }
 
-    @Override
-    public String toString() {
-        return "SensorData{" +
-                "dataId=" + dataId +
-                ", sensorManage=" + sensorManage +
-                ", inputData=" + inputData +
-                ", createdAt=" + createdAt +
-                '}';
-    }
 }

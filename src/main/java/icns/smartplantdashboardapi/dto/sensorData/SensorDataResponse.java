@@ -23,21 +23,16 @@ public class SensorDataResponse {
 
     private SensorManageSimpleResponse sensorManage;
 
+    private Integer sensorState;
+
     public SensorDataResponse(SensorData sensorData){
         this.dataId = sensorData.getDataId();
         this.sensorManage = new SensorManageSimpleResponse(sensorData.getSensorManage());
         this.inputData = sensorData.getInputData();
         this.createdAt = sensorData.getCreatedAt();
+        this.sensorState = sensorData.getSensorManage().getSensorState();
 
     }
 
-    @Override
-    public String toString() {
-        return "SensorDataResponse{" +
-                "dataId=" + dataId +
-                ", inputData=" + inputData +
-                ", createdAt=" + createdAt +
-                ", sensorManage=" + sensorManage.toString() +
-                '}';
-    }
+
 }
