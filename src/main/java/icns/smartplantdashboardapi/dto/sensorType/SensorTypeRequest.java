@@ -24,10 +24,8 @@ public class SensorTypeRequest {
     @NotEmpty
     private String typeColorCode;
 
-    @NotEmpty
     private String unit;
 
-    @NotEmpty
     private Integer display;
 
     public SensorType toEntity(){
