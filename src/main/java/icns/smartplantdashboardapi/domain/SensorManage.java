@@ -42,7 +42,7 @@ public class SensorManage {
     private String ssContactPhone;
 
     // SensorState
-    @ColumnDefault("0")
+    @Column
     private Integer sensorState;
 
     // SensorRange

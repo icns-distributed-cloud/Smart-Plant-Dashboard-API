@@ -33,11 +33,19 @@ public class SensorType {
     @Column(nullable = false, unique = true)
     private String typeColorCode;
 
+    @Column
+    private String unit;
+
+    @Column
+    private Integer display;
+
     public SensorType update(SensorTypeRequest sensorTypeRequest){
         this.typeName = sensorTypeRequest.getTypeName();
         this.typeCode = sensorTypeRequest.getTypeCode();
         this.typeDtl = sensorTypeRequest.getTypeDtl();
         this.typeColorCode = sensorTypeRequest.getTypeColorCode();
+        this.unit = sensorTypeRequest.getUnit();
+        this.display = sensorTypeRequest.getDisplay();
         return this;
     }
 
