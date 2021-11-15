@@ -48,8 +48,10 @@ public class SensorDataService {
     public void detectAbnormal(Integer pastState, SensorManage sensorManage){
 
         Integer currState = sensorManage.getSensorState();
-
-        if( pastState < currState){
+        if(pastState == null){
+            System.out.println("Seneor Data Start");
+        }
+        else if( pastState < currState){
             AbnormalDetection abnormalDetection = new AbnormalDetection(sensorManage, sensorManage.getSensorState());
             abnormalDetectionRepository.save(abnormalDetection);
             alertState(abnormalDetection);
