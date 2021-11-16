@@ -37,4 +37,9 @@ public class ConctactController {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK,contactService.updateById(id, contactRequest)), null, HttpStatus.OK);
     }
 
+    @DeleteMapping("/contact/{id}")
+    public ResponseEntity deleteById(@PathVariable Long id){
+        contactService.deleteById(id);
+        return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT,id),null,HttpStatus.NO_CONTENT);
+    }
 }

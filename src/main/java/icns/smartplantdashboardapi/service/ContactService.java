@@ -47,5 +47,12 @@ public class ContactService {
         return contactList;
     }
 
+    @Transactional
+    public Long deleteById(Long id){
+        Long deleted = contactRepository.findById(id).get().getId();
+        contactRepository.deleteById(id);
+        return deleted;
+    }
+
 
 }
