@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = {"센서 이상 경고 관리"})
+@Api(tags = {"센서 상태 경계값 관리"})
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

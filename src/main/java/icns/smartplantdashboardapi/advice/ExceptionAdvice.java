@@ -26,17 +26,17 @@ public class ExceptionAdvice {
     @ExceptionHandler(SensorPosNotFoundException.class)
     public ResponseEntity sensorPosNotFoundException(SensorPosNotFoundException e){
 
-        return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND, Msg.NOT_FOUND_SENSOR_POS,null), null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(CommonResponse.res(StatusCode.BAD_REQUEST, Msg.NOT_FOUND_SENSOR_POS,null), null, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(SensorManageNotFoundException.class)
     public ResponseEntity sensorManageNotFoundException(SensorManageNotFoundException e){
-        return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND,Msg.NOT_FOUND_SENSOR,null), null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(CommonResponse.res(StatusCode.BAD_REQUEST,Msg.NOT_FOUND_SENSOR,null), null, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(SensorTypeNotFoundException.class)
     public ResponseEntity sensorTypeNotFoundException(SensorTypeNotFoundException e){
-        return new ResponseEntity(CommonResponse.res(StatusCode.NOT_FOUND, Msg.NOT_FOUND_SENSOR_TYPE, null), null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(CommonResponse.res(StatusCode.BAD_REQUEST, Msg.NOT_FOUND_SENSOR_TYPE, null), null, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DuplicateException.class)

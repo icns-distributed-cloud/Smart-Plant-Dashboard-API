@@ -1,4 +1,4 @@
-package icns.smartplantdashboardapi.dto.abnormalDetection.contact;
+package icns.smartplantdashboardapi.dto.contact;
 
 import icns.smartplantdashboardapi.domain.Contact;
 import lombok.AllArgsConstructor;
@@ -14,11 +14,13 @@ public class ContactResponse {
     private Long id;
     private String name;
     private String phone;
+    private Long posId;
 
     public ContactResponse(Contact contact){
         this.id = contact.getId();
         this.name = contact.getName();
         this.phone = contact.getPhone();
+        this.posId = contact.getSsPos().getPosId();
     }
 }
 

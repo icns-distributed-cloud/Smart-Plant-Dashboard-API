@@ -1,8 +1,9 @@
 package icns.smartplantdashboardapi.controller;
 
-import icns.smartplantdashboardapi.dto.abnormalDetection.contact.ContactRequest;
+import icns.smartplantdashboardapi.dto.contact.ContactRequest;
 import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
+import icns.smartplantdashboardapi.dto.sensorManage.SensorManageRequest;
 import icns.smartplantdashboardapi.service.ContactService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,16 @@ public class ConctactController {
     }
 
     @GetMapping("/contact")
-    public ResponseEntity findAll(final Pageable pageable){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, contactService.findAll(pageable)),null, HttpStatus.OK);
+    public ResponseEntity find(@RequestParam(value="posId", required = false) Long posId, final Pageable pageable){
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, contactService.find(posId,pageable)),null, HttpStatus.OK);
 
     }
+
+    @PutMapping("/contact/{id}")
+    public ResponseEntity updateById(
+            @PathVariable("id") Long id,
+            @RequestBody ContactRequest contactRequest){
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK,contactService.updateById(id, contactRequest)), null, HttpStatus.OK);
+    }
+
 }
