@@ -1,8 +1,7 @@
-package icns.smartplantdashboardapi.dto.abnormalDetection.contact;
+package icns.smartplantdashboardapi.dto.contact;
 
 import icns.smartplantdashboardapi.domain.Contact;
-import icns.smartplantdashboardapi.domain.SensorData;
-import icns.smartplantdashboardapi.domain.SensorManage;
+import icns.smartplantdashboardapi.domain.SensorPos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +12,13 @@ import lombok.NoArgsConstructor;
 public class ContactRequest {
     private String name;
     private String phone;
+    private Long sensorPosId;
 
-    public Contact toEntity(){
+    public Contact toEntity(SensorPos sensorPos){
         return Contact.builder()
                 .name(name)
                 .phone(phone)
+                .ssPos(sensorPos)
                 .build();
     }
 }
