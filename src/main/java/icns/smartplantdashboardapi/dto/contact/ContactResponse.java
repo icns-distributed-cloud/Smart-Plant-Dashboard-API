@@ -15,12 +15,14 @@ public class ContactResponse {
     private String name;
     private String phone;
     private Long posId;
+    private String posName;
 
     public ContactResponse(Contact contact){
         this.id = contact.getId();
         this.name = contact.getName();
         this.phone = contact.getPhone();
         this.posId = contact.getSsPos().getPosId();
+        this.posName = contact.getSsPos().getPosName();
     }
 }
 
