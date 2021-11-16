@@ -14,20 +14,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SocketAbnormalDetectionResponse {
-    @NotEmpty
     private LocalDateTime createdAt;
 
-    @NotEmpty
     private Integer sensorState;
 
-    @NotEmpty
     private Long posId;
 
-    @NotEmpty
     private String ssCode;
 
-    @NotEmpty
     private String posName;
+
+    private String typeName;
 
 
     public SocketAbnormalDetectionResponse(AbnormalDetection abnormalDetection){
@@ -36,6 +33,7 @@ public class SocketAbnormalDetectionResponse {
         this.posId = abnormalDetection.getSensorManage().getSsPos().getPosId();
         this.ssCode = abnormalDetection.getSensorManage().createSensorCode();
         this.posName = abnormalDetection.getSensorManage().getSsPos().getPosName();
+        this.typeName = abnormalDetection.getSensorManage().getSsType().getTypeName();
     }
 
 
