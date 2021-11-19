@@ -22,7 +22,7 @@ import java.io.IOException;
 public class SopController {
     private final SopService sopService;
 
-    @PutMapping("/sop")
+    @PostMapping("/sop")
     public ResponseEntity uploadFile(@RequestParam("typeId") Long typeId, @RequestParam("level") int level, @RequestParam("diagramFile") MultipartFile diagramFile) throws IOException {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK,sopService.update(typeId, level, diagramFile)), null, HttpStatus.OK);
     }
