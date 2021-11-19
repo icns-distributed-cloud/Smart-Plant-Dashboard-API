@@ -3,10 +3,12 @@ package icns.smartplantdashboardapi.service;
 import icns.smartplantdashboardapi.advice.exception.DuplicateException;
 import icns.smartplantdashboardapi.advice.exception.SensorTypeNotFoundException;
 import icns.smartplantdashboardapi.domain.SensorType;
+import icns.smartplantdashboardapi.domain.Sop;
 import icns.smartplantdashboardapi.dto.sensorPos.SensorPosResponse;
 import icns.smartplantdashboardapi.dto.sensorType.SensorTypeRequest;
 import icns.smartplantdashboardapi.dto.sensorType.SensorTypeResponse;
 import icns.smartplantdashboardapi.repository.SensorTypeRepository;
+import icns.smartplantdashboardapi.repository.SopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class SensorTypeService {
 
     private final SensorTypeRepository sensorTypeRepository;
+    private final SopRepository sopRepository;
 
     @Transactional(readOnly = true)
     public Page<SensorTypeResponse> findAll(Pageable pageable){
@@ -43,6 +46,17 @@ public class SensorTypeService {
     public Long save(SensorTypeRequest sensorTypeRequest){
         validateDuplication(sensorTypeRequest);
         SensorType saved = sensorTypeRepository.save(sensorTypeRequest.toEntity());
+
+        for(int i=1;i<=4;i++){
+            Sop sop = Sop.builder()
+                    .level(i)
+                    .ssType(saved)
+                    .diagramPath(null)
+                    .build();
+            sopRepository.save(sop);
+        }
+
+
         return saved.getTypeId();
     }
 
