@@ -29,6 +29,11 @@ public class SensorPos {
     @Column(nullable = false, unique = true)
     private String posCode;
 
+    @Column
+    private String BackgroundImgPath;
+
+    @Column
+    private String SensorImgPath;
 
     public SensorPos update(SensorPosRequest sensorPosRequest){
         this.posName = sensorPosRequest.getPosName();

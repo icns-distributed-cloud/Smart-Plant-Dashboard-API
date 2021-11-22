@@ -28,7 +28,7 @@ public class SopService {
     private final SopDetailTitleParseRepository sopDetailTitleParseRepository;
 
     private String getFilePath(Long typeId, Integer level){
-        String absolutePath = new File("").getAbsolutePath() + "\\sop-diagram\\";
+        String absolutePath = new File("").getAbsolutePath() + "/sop-diagram/";
         String fileName = typeId + "-" + level.toString() + ".text";
 
         String path = absolutePath + fileName;
@@ -72,12 +72,17 @@ public class SopService {
     public SopResponse findDiagram(Long typeId,Integer level) throws IOException{
         SensorType sensorType = sensorTypeRepository.findById(typeId).get();
         Sop sop = sopRepository.findBySsTypeAndLevel(sensorType, level).get();
+        if(sop.getDiagramPath() == null){
+            return new SopResponse(sop, null);
+        }else{
+            BufferedReader bufferedReader = new BufferedReader(
+                    new FileReader(sop.getDiagramPath())
+            );
+            String diagram = bufferedReader.readLine();
+            return new SopResponse(sop, diagram);
+        }
 
-        BufferedReader bufferedReader = new BufferedReader(
-                new FileReader(sop.getDiagramPath())
-        );
-        String diagram = bufferedReader.readLine();
-        return new SopResponse(sop, diagram);
+
     }
 
 
