@@ -19,15 +19,15 @@ public class SopResponse {
     private Long typeId;
     private String typeName;
     private Integer level;
-    private String diagramPath;
+    private String diagram;
 
 
-    public SopResponse(Sop sop){
+    public SopResponse(Sop sop, String diagram){
         this.id = sop.getId();
         this.typeId = sop.getSsType().getTypeId();
         this.typeName = sop.getSsType().getTypeName();
         this.level = sop.getLevel();
-        this.diagramPath = sop.getDiagramPath();
+        this.diagram = diagram;
     }
 
 }

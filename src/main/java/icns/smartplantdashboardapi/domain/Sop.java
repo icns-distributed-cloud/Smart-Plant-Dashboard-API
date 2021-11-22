@@ -28,7 +28,7 @@ public class Sop {
     private Integer level;
 
     @Column
-    String diagramPath;
+    private String diagramPath;
 
     public Sop update(String diagramPath){
         this.diagramPath = diagramPath;

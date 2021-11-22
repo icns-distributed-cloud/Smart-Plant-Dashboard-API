@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Builder
@@ -26,8 +25,13 @@ public class SopDetail {
     @Column
     private Integer level;
 
-    @ElementCollection
-    @CollectionTable(name = "diagram_title_list")
-    private List<String> diagramTitleList;
+    @Column
+    private String title;
+
+    public SopDetail update(String title){
+        this.title=title;
+        return this;
+    }
+
 
 }
