@@ -4,10 +4,12 @@ import icns.smartplantdashboardapi.advice.exception.DuplicateException;
 import icns.smartplantdashboardapi.advice.exception.SensorTypeNotFoundException;
 import icns.smartplantdashboardapi.domain.SensorType;
 import icns.smartplantdashboardapi.domain.Sop;
+import icns.smartplantdashboardapi.domain.SopDetail;
 import icns.smartplantdashboardapi.dto.sensorPos.SensorPosResponse;
 import icns.smartplantdashboardapi.dto.sensorType.SensorTypeRequest;
 import icns.smartplantdashboardapi.dto.sensorType.SensorTypeResponse;
 import icns.smartplantdashboardapi.repository.SensorTypeRepository;
+import icns.smartplantdashboardapi.repository.SopDetailRepository;
 import icns.smartplantdashboardapi.repository.SopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ public class SensorTypeService {
 
     private final SensorTypeRepository sensorTypeRepository;
     private final SopRepository sopRepository;
+    private final SopDetailRepository sopDetailRepository;
 
     @Transactional(readOnly = true)
     public Page<SensorTypeResponse> findAll(Pageable pageable){
@@ -54,7 +57,14 @@ public class SensorTypeService {
                     .diagramPath(null)
                     .build();
             sopRepository.save(sop);
+            SopDetail sopDetail = SopDetail.builder()
+                    .level(i)
+                    .ssType(saved)
+                    .diagramTitleList(null)
+                    .build();
+            sopDetailRepository.save(sopDetail);
         }
+
 
 
         return saved.getTypeId();

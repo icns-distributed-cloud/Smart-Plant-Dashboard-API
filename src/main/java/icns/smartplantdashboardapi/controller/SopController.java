@@ -7,6 +7,7 @@ import icns.smartplantdashboardapi.dto.sop.SopRequest;
 import icns.smartplantdashboardapi.service.SopService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class SopController {
     private final SopService sopService;
 
     @PostMapping("/sop")
-    public ResponseEntity uploadFile(@RequestParam("typeId") Long typeId, @RequestParam("level") int level, @RequestParam("diagramFile") MultipartFile diagramFile) throws IOException {
+    public ResponseEntity uploadFile(@RequestParam("typeId") Long typeId, @RequestParam("level") int level, @RequestParam("diagramFile") MultipartFile diagramFile) throws ParseException,IOException {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK,sopService.update(typeId, level, diagramFile)), null, HttpStatus.OK);
     }
 

@@ -38,6 +38,10 @@ dependencies {
     // WebSocket
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+
 }
 
 test {
