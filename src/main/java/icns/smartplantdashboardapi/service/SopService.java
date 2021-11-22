@@ -59,8 +59,6 @@ public class SopService {
         }
 
         // Save File
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> map = mapper.readValue(sopRequest.getDiagram(), Map.class);
         String diagramPath = getFilePath(sopRequest.getTypeId(), sopRequest.getLevel());
         FileWriter fileWriter = new FileWriter(diagramPath);
         fileWriter.write(sopRequest.getDiagram());
