@@ -2,8 +2,8 @@ package icns.smartplantdashboardapi.controller;
 
 import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
-import icns.smartplantdashboardapi.dto.sop.SopDetailRequest;
-import icns.smartplantdashboardapi.dto.sop.SopDetailUpdateRequest;
+import icns.smartplantdashboardapi.dto.sopDetail.SopDetailRequest;
+import icns.smartplantdashboardapi.dto.sopDetail.SopDetailUpdateRequest;
 import icns.smartplantdashboardapi.service.SopDetailService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +43,11 @@ public class SopDetailController {
     @DeleteMapping("/sop-detail/{titleId}")
     public ResponseEntity delete(@PathVariable(value = "titleId") Long titleId){
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailService.delete(titleId)), null, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/sop-detail/title-list")
+    public ResponseEntity findTitleParseList(@RequestParam(value="typeId", required = false) Long typeId,@RequestParam(value="level", required = false) Integer level){
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailService.findTitleParseList(typeId, level)), null, HttpStatus.OK);
     }
 
 }

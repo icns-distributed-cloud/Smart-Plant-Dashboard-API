@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import icns.smartplantdashboardapi.advice.exception.SensorTypeNotFoundException;
 import icns.smartplantdashboardapi.domain.SensorType;
 import icns.smartplantdashboardapi.domain.Sop;
+import icns.smartplantdashboardapi.domain.SopDetailTitleParse;
 import icns.smartplantdashboardapi.dto.sop.SopRequest;
 import icns.smartplantdashboardapi.dto.sop.SopResponse;
 import icns.smartplantdashboardapi.repository.SensorTypeRepository;
+import icns.smartplantdashboardapi.repository.SopDetailTitleParseRepository;
 import icns.smartplantdashboardapi.repository.SopRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,7 @@ import java.util.Map;
 public class SopService {
     private final SopRepository sopRepository;
     private final SensorTypeRepository sensorTypeRepository;
+    private final SopDetailTitleParseRepository sopDetailTitleParseRepository;
 
     private String getFilePath(Long typeId, Integer level){
         String absolutePath = new File("").getAbsolutePath() + "\\sop-diagram\\";
@@ -37,6 +40,7 @@ public class SopService {
         SensorType sensorType = sensorTypeRepository.findById(sopRequest.getTypeId()).get();
         Sop sop = sopRepository.findBySsTypeAndLevel(sensorType, sopRequest.getLevel()).get();
 
+        sopDetailTitleParseRepository.deleteBySsTypeAndLevel(sensorType, sopRequest.getLevel());
 
         // JSON Parsing
         JSONObject jsonObject = new JSONObject(sopRequest.getDiagram());
@@ -45,8 +49,13 @@ public class SopService {
             JSONObject obj = jsonArray.getJSONObject(i);
             JSONObject styleObj = obj.getJSONObject("style");
             String text = styleObj.getString("text");
+            SopDetailTitleParse sopDetailTitleParse = SopDetailTitleParse.builder()
+                        .ssType(sensorType)
+                        .level(sopRequest.getLevel())
+                        .title(text)
+                        .build();
+            sopDetailTitleParseRepository.save(sopDetailTitleParse);
 
-            System.out.println(text);
         }
 
         // Save File
@@ -72,6 +81,8 @@ public class SopService {
         String diagram = bufferedReader.readLine();
         return new SopResponse(sop, diagram);
     }
+
+
 
 
 }
