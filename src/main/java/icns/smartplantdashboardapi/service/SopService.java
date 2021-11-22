@@ -1,74 +1,88 @@
 package icns.smartplantdashboardapi.service;
 
-import icns.smartplantdashboardapi.advice.exception.SensorPosNotFoundException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import icns.smartplantdashboardapi.advice.exception.SensorTypeNotFoundException;
-import icns.smartplantdashboardapi.domain.SensorPos;
 import icns.smartplantdashboardapi.domain.SensorType;
 import icns.smartplantdashboardapi.domain.Sop;
+import icns.smartplantdashboardapi.domain.SopDetailTitleParse;
 import icns.smartplantdashboardapi.dto.sop.SopRequest;
 import icns.smartplantdashboardapi.dto.sop.SopResponse;
-import icns.smartplantdashboardapi.repository.SensorPosRepository;
 import icns.smartplantdashboardapi.repository.SensorTypeRepository;
+import icns.smartplantdashboardapi.repository.SopDetailTitleParseRepository;
 import icns.smartplantdashboardapi.repository.SopRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.plaf.nimbus.State;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.*;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class SopService {
     private final SopRepository sopRepository;
     private final SensorTypeRepository sensorTypeRepository;
+    private final SopDetailTitleParseRepository sopDetailTitleParseRepository;
 
     private String getFilePath(Long typeId, Integer level){
-
-        // set file name
         String absolutePath = new File("").getAbsolutePath() + "\\sop-diagram\\";
-        String fileName = typeId + "-" + level.toString() + ".json";
+        String fileName = typeId + "-" + level.toString() + ".text";
 
         String path = absolutePath + fileName;
         return path;
     }
 
     @Transactional
-    public SopResponse update(Long typeId, Integer level, MultipartFile diagramFile) throws IOException {
-        SensorType sensorType = sensorTypeRepository.findById(typeId).orElseThrow(SensorTypeNotFoundException::new);
+    public Long updateDiagram(SopRequest sopRequest) throws IOException {
+        SensorType sensorType = sensorTypeRepository.findById(sopRequest.getTypeId()).get();
+        Sop sop = sopRepository.findBySsTypeAndLevel(sensorType, sopRequest.getLevel()).get();
 
-        Sop sop = sopRepository.findBySsTypeAndLevel(sensorType,level).get();
+        sopDetailTitleParseRepository.deleteBySsTypeAndLevel(sensorType, sopRequest.getLevel());
 
-        String path;
+        // JSON Parsing
+        JSONObject jsonObject = new JSONObject(sopRequest.getDiagram());
+        JSONArray jsonArray = jsonObject.getJSONArray("node");
+        for (int i=0;i<jsonArray.length();i++){
+            JSONObject obj = jsonArray.getJSONObject(i);
+            JSONObject styleObj = obj.getJSONObject("style");
+            String text = styleObj.getString("text");
+            SopDetailTitleParse sopDetailTitleParse = SopDetailTitleParse.builder()
+                        .ssType(sensorType)
+                        .level(sopRequest.getLevel())
+                        .title(text)
+                        .build();
+            sopDetailTitleParseRepository.save(sopDetailTitleParse);
 
-        if(sop.getDiagramPath() == null){
-            path = getFilePath(typeId, level);
-
-        }else{
-            path = sop.getDiagramPath();
         }
-        sop.update(path);
-        File file = new File(path);
-        diagramFile.transferTo(file);
-        return new SopResponse(sop);
+
+        // Save File
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> map = mapper.readValue(sopRequest.getDiagram(), Map.class);
+        String diagramPath = getFilePath(sopRequest.getTypeId(), sopRequest.getLevel());
+        FileWriter fileWriter = new FileWriter(diagramPath);
+        fileWriter.write(sopRequest.getDiagram());
+        fileWriter.close();
+
+        sop.update(diagramPath);
+        return sop.getId();
     }
 
-    @Transactional
-    public SopResponse find(Long typeId, Integer level){
-        SensorType sensorType = sensorTypeRepository.findById(typeId).orElseThrow(SensorTypeNotFoundException::new);
+    @Transactional(readOnly = true)
+    public SopResponse findDiagram(Long typeId,Integer level) throws IOException{
+        SensorType sensorType = sensorTypeRepository.findById(typeId).get();
+        Sop sop = sopRepository.findBySsTypeAndLevel(sensorType, level).get();
 
-        Sop sop = sopRepository.findBySsTypeAndLevel(sensorType,level).get();
-
-        return new SopResponse(sop);
-
-
+        BufferedReader bufferedReader = new BufferedReader(
+                new FileReader(sop.getDiagramPath())
+        );
+        String diagram = bufferedReader.readLine();
+        return new SopResponse(sop, diagram);
     }
+
+
 
 
 }

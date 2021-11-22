@@ -1,7 +1,5 @@
 package icns.smartplantdashboardapi.domain;
 
-import icns.smartplantdashboardapi.dto.sensorPos.SensorPosRequest;
-import icns.smartplantdashboardapi.dto.sop.SopRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,11 +8,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Builder
 @Getter
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class Sop {
+@AllArgsConstructor
+public class SopDetailTitleParse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -28,13 +26,5 @@ public class Sop {
     private Integer level;
 
     @Column
-    private String diagramPath;
-
-    public Sop update(String diagramPath){
-        this.diagramPath = diagramPath;
-        return this;
-    }
-
+    private String title;
 }
-
-

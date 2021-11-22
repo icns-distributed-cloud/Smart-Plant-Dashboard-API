@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class SopRequest {
     private Long typeId;
     private Integer level;
+    private String diagram;
 
     public Sop toEntity(SensorType sensorType, String diagramPath){
         return Sop.builder()
