@@ -1,13 +1,12 @@
 package icns.smartplantdashboardapi.service;
 
-import icns.smartplantdashboardapi.domain.SensorType;
+import icns.smartplantdashboardapi.domain.Situation;
 import icns.smartplantdashboardapi.domain.SopDetail;
-import icns.smartplantdashboardapi.domain.SopDetailTitleParse;
 import icns.smartplantdashboardapi.dto.sopDetail.SopDetailRequest;
 import icns.smartplantdashboardapi.dto.sopDetail.SopDetailResponse;
 import icns.smartplantdashboardapi.dto.sopDetail.SopDetailTitleParseResponse;
 import icns.smartplantdashboardapi.dto.sopDetail.SopDetailUpdateRequest;
-import icns.smartplantdashboardapi.repository.SensorTypeRepository;
+import icns.smartplantdashboardapi.repository.SituationRepository;
 import icns.smartplantdashboardapi.repository.SopDetailRepository;
 import icns.smartplantdashboardapi.repository.SopDetailTitleParseRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +22,14 @@ import java.util.stream.Collectors;
 public class SopDetailService {
 
     private final SopDetailRepository sopDetailRepository;
-    private final SensorTypeRepository sensorTypeRepository;
+    private final SituationRepository situationRepository;
     private final SopDetailTitleParseRepository sopDetailTitleParseRepository;
 
 
     @Transactional
     public Long save(SopDetailRequest sopDetailRequest){
-        SensorType sensorType = sensorTypeRepository.findById(sopDetailRequest.getTypeId()).get();
-        SopDetail sopDetail = sopDetailRepository.save(sopDetailRequest.toEntity(sensorType));
+        Situation situation = situationRepository.findById(sopDetailRequest.getSituationId()).get();
+        SopDetail sopDetail = sopDetailRepository.save(sopDetailRequest.toEntity(situation));
         return sopDetail.getId();
     }
 
@@ -54,24 +53,25 @@ public class SopDetailService {
     }
 
     @Transactional(readOnly = true)
-    public List<SopDetailResponse> findAll(Long typeId, Integer level){
-        SensorType sensorType = sensorTypeRepository.findById(typeId).get();
+    public List<SopDetailResponse> findAll(Long situationId, Integer level){
+        Situation situation = situationRepository.findById(situationId).get();
 
-        List<SopDetailResponse> sopDetailResponseList = sopDetailRepository.findBySsTypeAndLevel(sensorType, level).stream().map(SopDetailResponse::new).collect(Collectors.toList());
+        List<SopDetailResponse> sopDetailResponseList = sopDetailRepository.findBySituationAndLevel(situation, level).stream().map(SopDetailResponse::new).collect(Collectors.toList());
         return sopDetailResponseList;
 
     }
 
     @Transactional(readOnly = true)
-    public SopDetailTitleParseResponse findTitleParseList(Long typeId, Integer level){
-        SensorType sensorType = sensorTypeRepository.findById(typeId).get();
+    public SopDetailTitleParseResponse findTitleParseList(Long situationId, Integer level){
+        Situation situation = situationRepository.findById(situationId).get();
         List<String> titleList = new ArrayList<>();
 
-        sopDetailTitleParseRepository.findBySsTypeAndLevel(sensorType, level).stream().forEach(x -> titleList.add(x.getTitle()));
+        sopDetailTitleParseRepository.findBySituationAndLevel(situation, level).stream().forEach(x -> titleList.add(x.getTitle()));
 
         SopDetailTitleParseResponse sopDetailTitleParseResponse = new SopDetailTitleParseResponse(titleList);
         return sopDetailTitleParseResponse;
 
     }
+
 
 }

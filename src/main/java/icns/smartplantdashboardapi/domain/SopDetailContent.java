@@ -1,5 +1,6 @@
 package icns.smartplantdashboardapi.domain;
 
+import icns.smartplantdashboardapi.dto.sopDetail.SopDetailContentRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SopDetailCheck {
+public class SopDetailContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -24,5 +25,18 @@ public class SopDetailCheck {
 
     @Column
     private String text;
+
+    @Column
+    private boolean message;
+
+    @Column
+    private boolean complete;
+
+    public SopDetailContent update(SopDetailContentRequest sopDetailContentRequest){
+        text = sopDetailContentRequest.getText();
+        message = sopDetailContentRequest.isMessage();
+        complete = sopDetailContentRequest.isComplete();
+        return this;
+    }
 
 }

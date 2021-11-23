@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class SopDetailResponse {
     private Long id;
 
-    private Long typeId;
+    private Long situationId;
 
     private Integer level;
 
@@ -22,7 +22,7 @@ public class SopDetailResponse {
 
     public SopDetailResponse(SopDetail sopDetail){
         this.id = sopDetail.getId();
-        this.typeId = sopDetail.getSsType().getTypeId();
+        this.situationId = sopDetail.getSituation().getId();
         this.level = sopDetail.getLevel();
         this.title = sopDetail.getTitle();
     }

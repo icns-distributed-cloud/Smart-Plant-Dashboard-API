@@ -42,18 +42,6 @@ public class SensorTypeService {
     public Long save(SensorTypeRequest sensorTypeRequest){
         validateDuplication(sensorTypeRequest);
         SensorType saved = sensorTypeRepository.save(sensorTypeRequest.toEntity());
-
-        for(int i=1;i<=4;i++){
-            Sop sop = Sop.builder()
-                    .level(i)
-                    .ssType(saved)
-                    .diagramPath(null)
-                    .build();
-            sopRepository.save(sop);
-        }
-
-
-
         return saved.getTypeId();
     }
 

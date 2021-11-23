@@ -12,19 +12,16 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SopDetailTitleParse {
+public class Situation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
-    @ManyToOne(targetEntity = Situation.class, fetch=FetchType.LAZY)
-    @JoinColumn(name="situation_id")
-    private Situation situation;
-
     @Column
-    private Integer level;
+    private String name;
 
-    @Column
-    private String title;
+    public Situation update(String name){
+        this.name = name;
+        return this;
+    }
 }

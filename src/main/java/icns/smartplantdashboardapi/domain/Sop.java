@@ -20,9 +20,9 @@ public class Sop {
     @Column
     private Long id;
 
-    @ManyToOne(targetEntity = SensorType.class, fetch=FetchType.LAZY)
-    @JoinColumn(name="sensortype_id")
-    private SensorType ssType;
+    @ManyToOne(targetEntity = Situation.class, fetch=FetchType.LAZY)
+    @JoinColumn(name="situation_id")
+    private Situation situation;
 
     @Column
     private Integer level;
