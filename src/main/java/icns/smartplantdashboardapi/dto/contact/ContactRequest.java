@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ContactRequest {
     private String name;
     private String phone;
-    private Long sensorPosId;
+    private Long posId;
 
     public Contact toEntity(SensorPos sensorPos){
         return Contact.builder()

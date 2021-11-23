@@ -41,7 +41,7 @@ dependencies {
     implementation 'org.json:json:20190722'
 
     //sms
-    compileOnly group: 'net.nurigo', name: 'javaSDK', version: '2.2'
+    implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
 
 }
 
