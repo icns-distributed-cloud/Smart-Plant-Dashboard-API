@@ -23,6 +23,10 @@ public class SopDetailContent {
     @JoinColumn(name="sopdetail_id")
     private SopDetail sopDetail;
 
+    @ManyToOne(targetEntity = SensorPos.class, fetch=FetchType.LAZY)
+    @JoinColumn(name="sensorpos_id", nullable = true)
+    private SensorPos ssPos;
+
     @Column
     private String text;
 
@@ -32,10 +36,10 @@ public class SopDetailContent {
     @Column
     private boolean complete;
 
-    public SopDetailContent update(SopDetailContentRequest sopDetailContentRequest){
+    public SopDetailContent update(SopDetailContentRequest sopDetailContentRequest, SensorPos sensorPos){
         text = sopDetailContentRequest.getText();
         message = sopDetailContentRequest.isMessage();
-        complete = sopDetailContentRequest.isComplete();
+        ssPos = sensorPos;
         return this;
     }
 

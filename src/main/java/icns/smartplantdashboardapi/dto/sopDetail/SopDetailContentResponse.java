@@ -13,6 +13,7 @@ public class SopDetailContentResponse {
     private Long titleId;
     private String text;
     private boolean complete;
+    private Long posId;
     private boolean message;
 
     public SopDetailContentResponse(SopDetailContent sopDetailContent){
@@ -21,5 +22,6 @@ public class SopDetailContentResponse {
         this.text = sopDetailContent.getText();
         this.complete = sopDetailContent.isComplete();
         this.message = sopDetailContent.isMessage();
+        this.posId = sopDetailContent.getSsPos().getPosId();
     }
 }
