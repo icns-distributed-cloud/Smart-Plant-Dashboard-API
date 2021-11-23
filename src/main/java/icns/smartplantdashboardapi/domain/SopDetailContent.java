@@ -30,16 +30,20 @@ public class SopDetailContent {
     @Column
     private String text;
 
-    @Column
     private boolean message;
+
+    @Column(nullable = true)
+    private String messageContent;
 
     @Column
     private boolean complete;
+
 
     public SopDetailContent update(SopDetailContentRequest sopDetailContentRequest, SensorPos sensorPos){
         text = sopDetailContentRequest.getText();
         message = sopDetailContentRequest.isMessage();
         ssPos = sensorPos;
+        messageContent=sopDetailContentRequest.getMessageContent();
         return this;
     }
 

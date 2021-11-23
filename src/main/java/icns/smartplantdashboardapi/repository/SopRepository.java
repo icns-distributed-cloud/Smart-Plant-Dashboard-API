@@ -10,5 +10,7 @@ import java.util.Optional;
 
 public interface SopRepository extends JpaRepository<Sop, Long> {
     Optional<Sop> findBySituationAndLevel(Situation situation, Integer level);
+    Optional<Sop> deleteBySituationAndLevel(Situation situation, Integer level);
+
 
 }

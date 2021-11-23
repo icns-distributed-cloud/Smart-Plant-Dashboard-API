@@ -14,7 +14,10 @@ public class SopDetailContentResponse {
     private String text;
     private boolean complete;
     private Long posId;
+    private String posName;
     private boolean message;
+    private String messageContent;
+
 
     public SopDetailContentResponse(SopDetailContent sopDetailContent){
         this.id = sopDetailContent.getId();
@@ -22,6 +25,15 @@ public class SopDetailContentResponse {
         this.text = sopDetailContent.getText();
         this.complete = sopDetailContent.isComplete();
         this.message = sopDetailContent.isMessage();
-        this.posId = sopDetailContent.getSsPos().getPosId();
+        if(sopDetailContent.isMessage()){
+            this.posId = sopDetailContent.getSsPos().getPosId();
+            this.posName = sopDetailContent.getSsPos().getPosName();
+            this.messageContent = sopDetailContent.getMessageContent();
+        }else{
+            this.posId = null;
+            this.posName = null;
+            this.messageContent = null;
+        }
+
     }
 }

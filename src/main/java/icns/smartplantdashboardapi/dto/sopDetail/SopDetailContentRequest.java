@@ -15,6 +15,7 @@ public class SopDetailContentRequest {
     private String text;
     private boolean message;
     private Long posId;
+    private String messageContent;
 
     public SopDetailContent toEntity(SopDetail sopDetail, SensorPos sensorPos){
 
@@ -24,6 +25,7 @@ public class SopDetailContentRequest {
                 .complete(false)
                 .message(message)
                 .ssPos(sensorPos)
+                .messageContent(messageContent)
                 .build();
 
     }

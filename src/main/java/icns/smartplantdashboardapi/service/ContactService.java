@@ -22,7 +22,7 @@ public class ContactService {
 
     @Transactional
     public Long save(ContactRequest contactRequest){
-        SensorPos sensorPos = sensorPosRepository.findById(contactRequest.getSensorPosId()).orElseThrow(SensorPosNotFoundException::new);
+        SensorPos sensorPos = sensorPosRepository.findById(contactRequest.getPosId()).orElseThrow(SensorPosNotFoundException::new);
         Contact saved = contactRepository.save(contactRequest.toEntity(sensorPos));
         return saved.getId();
     }
@@ -30,7 +30,7 @@ public class ContactService {
     @Transactional
     public ContactResponse updateById(Long id, ContactRequest contactRequest){
         Contact contact = contactRepository.findById(id).get();
-        SensorPos sensorPos = sensorPosRepository.findById(contactRequest.getSensorPosId()).get();
+        SensorPos sensorPos = sensorPosRepository.findById(contactRequest.getPosId()).get();
         contact.update(contactRequest, sensorPos);
         return new ContactResponse(contact);
 

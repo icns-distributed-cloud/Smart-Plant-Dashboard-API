@@ -23,6 +23,7 @@ public class ContactResponse {
         this.phone = contact.getPhone();
         this.posId = contact.getSsPos().getPosId();
         this.posName = contact.getSsPos().getPosName();
+
     }
 }
 

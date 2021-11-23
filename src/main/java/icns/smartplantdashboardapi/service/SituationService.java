@@ -54,6 +54,11 @@ public class SituationService {
 
     @Transactional
     public Long delete(Long situationId){
+        Situation situation = situationRepository.findById(situationId).get();
+        for(Integer i=1;i<=4;i++){
+            sopRepository.deleteBySituationAndLevel(situation,i);
+
+        }
         situationRepository.deleteById(situationId);
         return situationId;
     }
