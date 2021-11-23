@@ -15,18 +15,15 @@ import java.util.HashMap;
 public class MessageService {
 
     @Value("${icns.app.coolsms.apikey}")
-    private String apiKey;
-    @Value("${icns.app.coolsms.apisecret}")
-    private String apiSecret;
 
     public Long sendMessage(){
-        String api_key = apiKey;
-        String api_secret = apiSecret;
+        String api_key = "apiKey";
+        String api_secret = "apiSecret";
         Message coolsms = new Message(api_key, api_secret);
         HashMap<String, String> params = new HashMap<String, String>();
 
-        params.put("to", "01097528081");
-        params.put("from", "01097528081");
+        params.put("to", "");
+        params.put("from", "");
         params.put("type", "SMS");
         params.put("text", "화재 발생");
         params.put("app_version", "test app 1.2");
