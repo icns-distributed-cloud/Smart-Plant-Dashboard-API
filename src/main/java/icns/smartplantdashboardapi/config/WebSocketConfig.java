@@ -17,6 +17,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOrigins("http://163.180.117.38","server.inhun.io").withSockJS();
+
+      registry.addEndpoint("/ws").setAllowedOrigins("http://163.180.117.38","server.inhun.io").withSockJS();
+
     }
 }
