@@ -1,7 +1,7 @@
 package icns.smartplantdashboardapi.dto.sop;
 
-import icns.smartplantdashboardapi.domain.SensorPos;
-import icns.smartplantdashboardapi.domain.SensorType;
+
+import icns.smartplantdashboardapi.domain.Situation;
 import icns.smartplantdashboardapi.domain.Sop;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SopRequest {
-    private Long typeId;
+    private Long situationId;
     private Integer level;
     private String diagram;
 
-    public Sop toEntity(SensorType sensorType, String diagramPath){
+    public Sop toEntity(Situation situation, String diagramPath){
         return Sop.builder()
-                .ssType(sensorType)
+                .situation(situation)
                 .level(level)
                 .diagramPath(diagramPath)
                 .build();

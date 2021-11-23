@@ -39,8 +39,8 @@ public class SopDetailController {
 
 
     @GetMapping("/sop-detail")
-    public ResponseEntity findAll(@RequestParam(value="typeId") Long typeId,@RequestParam(value="level") Integer level){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK,sopDetailService.findAll(typeId, level)), null, HttpStatus.OK);
+    public ResponseEntity findAll(@RequestParam(value="situationId") Long situationId,@RequestParam(value="level") Integer level){
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK,sopDetailService.findAll(situationId, level)), null, HttpStatus.OK);
     }
 
     @DeleteMapping("/sop-detail/{titleId}")
@@ -49,8 +49,8 @@ public class SopDetailController {
     }
 
     @GetMapping("/sop-detail/title-list")
-    public ResponseEntity findTitleParseList(@RequestParam(value="typeId") Long typeId,@RequestParam(value="level") Integer level){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailService.findTitleParseList(typeId, level)), null, HttpStatus.OK);
+    public ResponseEntity findTitleParseList(@RequestParam(value="situationId") Long situationId, @RequestParam(value="level") Integer level){
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailService.findTitleParseList(situationId, level)), null, HttpStatus.OK);
     }
 
     @PostMapping("/sop-detail/content")

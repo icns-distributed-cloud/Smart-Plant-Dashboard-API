@@ -16,16 +16,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SopResponse {
     private Long id;
-    private Long typeId;
-    private String typeName;
+    private Long situationId;
+    private String situationName;
     private Integer level;
     private String diagram;
 
 
     public SopResponse(Sop sop, String diagram){
         this.id = sop.getId();
-        this.typeId = sop.getSsType().getTypeId();
-        this.typeName = sop.getSsType().getTypeName();
+        this.situationId = sop.getSituation().getId();
+        this.situationName = sop.getSituation().getName();
         this.level = sop.getLevel();
         this.diagram = diagram;
     }

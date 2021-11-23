@@ -28,8 +28,8 @@ public class SopController {
     }
 
     @GetMapping("/sop")
-    public ResponseEntity findDiagram(@RequestParam("typeId") Long typeId, @RequestParam("level") int level) throws IOException{
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK,sopService.findDiagram(typeId, level)),null,HttpStatus.OK);
+    public ResponseEntity findDiagram(@RequestParam("situationId") Long situationId, @RequestParam("level") int level) throws IOException{
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK,sopService.findDiagram(situationId, level)),null,HttpStatus.OK);
     }
 
 
