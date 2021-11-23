@@ -53,9 +53,16 @@ public class SopDetailController {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailService.findTitleParseList(situationId, level)), null, HttpStatus.OK);
     }
 
+    // content
+
     @PostMapping("/sop-detail/content")
     public ResponseEntity saveContent(@RequestBody SopDetailContentRequest sopDetailContentRequest){
         return new ResponseEntity(CommonResponse.res(StatusCode.CREATED, sopDetailContentService.save(sopDetailContentRequest)),null, HttpStatus.OK);
+    }
+
+    @PutMapping("/sop-detail/content/{contentId}")
+    public ResponseEntity updateContent(@PathVariable(value="contentId") Long contentId, @RequestBody SopDetailContentRequest sopDetailContentRequest){
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.update(contentId, sopDetailContentRequest)),null, HttpStatus.OK);
     }
 
     @GetMapping("/sop-detail/content/{contentId}")
