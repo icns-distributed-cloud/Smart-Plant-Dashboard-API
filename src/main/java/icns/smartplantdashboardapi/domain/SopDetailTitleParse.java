@@ -26,5 +26,8 @@ public class SopDetailTitleParse {
     private Integer level;
 
     @Column
+    private float y;
+
+    @Column
     private String title;
 }

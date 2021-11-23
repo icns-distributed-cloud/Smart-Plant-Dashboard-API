@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface SopDetailTitleParseRepository extends JpaRepository<SopDetailTitleParse, Long> {
     List<SopDetailTitleParse> deleteBySituationAndLevel(Situation situation, Integer level);
-    List<SopDetailTitleParse> findBySituationAndLevel(Situation situation, Integer level);
+    List<SopDetailTitleParse> findBySituationAndLevelOrderByY(Situation situation, Integer level);
 
 }

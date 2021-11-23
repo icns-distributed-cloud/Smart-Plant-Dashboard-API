@@ -62,14 +62,12 @@ public class SopDetailService {
     }
 
     @Transactional(readOnly = true)
-    public SopDetailTitleParseResponse findTitleParseList(Long situationId, Integer level){
+    public List<SopDetailTitleParseResponse> findTitleParseList(Long situationId, Integer level){
         Situation situation = situationRepository.findById(situationId).get();
-        List<String> titleList = new ArrayList<>();
 
-        sopDetailTitleParseRepository.findBySituationAndLevel(situation, level).stream().forEach(x -> titleList.add(x.getTitle()));
+        List<SopDetailTitleParseResponse> sopDetailTitleParseResponseList = sopDetailTitleParseRepository.findBySituationAndLevelOrderByY(situation, level).stream().map(SopDetailTitleParseResponse::new).collect(Collectors.toList());
 
-        SopDetailTitleParseResponse sopDetailTitleParseResponse = new SopDetailTitleParseResponse(titleList);
-        return sopDetailTitleParseResponse;
+        return sopDetailTitleParseResponseList;
 
     }
 

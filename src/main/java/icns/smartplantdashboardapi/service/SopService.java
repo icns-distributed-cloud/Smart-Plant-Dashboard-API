@@ -51,9 +51,13 @@ public class SopService {
             JSONObject obj = jsonArray.getJSONObject(i);
             JSONObject styleObj = obj.getJSONObject("style");
             String text = styleObj.getString("text");
+            JSONArray position = obj.getJSONArray("position");
+            float y = position.getFloat(1);
+
             SopDetailTitleParse sopDetailTitleParse = SopDetailTitleParse.builder()
                         .situation(situation)
                         .level(sopRequest.getLevel())
+                        .y(y)
                         .title(text)
                         .build();
             sopDetailTitleParseRepository.save(sopDetailTitleParse);

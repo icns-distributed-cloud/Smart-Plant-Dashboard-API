@@ -1,10 +1,12 @@
 package icns.smartplantdashboardapi.dto.sopDetail;
 
+import icns.smartplantdashboardapi.domain.SopDetailTitleParse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +14,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class SopDetailTitleParseResponse {
-    List<String> titleParseList = new ArrayList<>();
+    @Column
+    private float y;
 
-    public SopDetailTitleParseResponse(List<String> titleList){
-        titleParseList = titleList;
+    @Column
+    private String title;
+
+    public SopDetailTitleParseResponse(SopDetailTitleParse sopDetailTitleParse){
+
+        y = sopDetailTitleParse.getY();
+        title = sopDetailTitleParse.getTitle();
     }
 }
