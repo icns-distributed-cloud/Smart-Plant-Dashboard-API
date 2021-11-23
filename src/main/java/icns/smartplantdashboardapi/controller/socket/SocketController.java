@@ -1,7 +1,7 @@
 package icns.smartplantdashboardapi.controller.socket;
 
-import icns.smartplantdashboardapi.dto.socket.sensorData.SocketSensorDataRequest;
-import icns.smartplantdashboardapi.dto.socket.sensorData.SocketSensorDataResponse;
+import icns.smartplantdashboardapi.dto.abnormalDetection.socket.SocketAbnormalDetectionResponse;
+import icns.smartplantdashboardapi.dto.sensorData.socket.SocketSensorDataResponse;
 import icns.smartplantdashboardapi.service.SensorDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -17,11 +17,17 @@ public class SocketController {
 
     private final SensorDataService sensorDataService;
 
-
     @MessageMapping("/receive/{ssId}")
     @SendTo("/send/{ssId}")
     public SocketSensorDataResponse SocketHandler(@DestinationVariable Long ssId){
         return sensorDataService.sendData(ssId);
+    }
+
+    @MessageMapping("/check")
+    @SendTo("/alert")
+    public SocketAbnormalDetectionResponse abnormalSocketHandler(SocketAbnormalDetectionResponse socketAbnormalDetectionResponse){
+        return socketAbnormalDetectionResponse;
+
     }
 
 

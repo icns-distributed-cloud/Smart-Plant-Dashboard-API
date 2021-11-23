@@ -3,6 +3,7 @@ package icns.smartplantdashboardapi.service;
 import icns.smartplantdashboardapi.advice.exception.SensorManageNotFoundException;
 import icns.smartplantdashboardapi.advice.exception.SensorPosNotFoundException;
 import icns.smartplantdashboardapi.advice.exception.SensorTypeNotFoundException;
+import icns.smartplantdashboardapi.domain.EState;
 import icns.smartplantdashboardapi.domain.SensorManage;
 import icns.smartplantdashboardapi.domain.SensorPos;
 import icns.smartplantdashboardapi.domain.SensorType;
@@ -31,8 +32,6 @@ public class SensorManageService {
         SensorPos sensorPos = sensorPosRepository.findById(sensorManageRequest.getSensorPosId()).orElseThrow(SensorPosNotFoundException::new);
         SensorType sensorType = sensorTypeRepository.findById(sensorManageRequest.getSensorTypeId()).orElseThrow(SensorTypeNotFoundException::new);
         SensorManage saved = sensorManageRepository.save(sensorManageRequest.toEntity(sensorPos, sensorType));
-        saved.createSensorCode();
-
         return saved.getSsId();
     }
 
@@ -43,7 +42,6 @@ public class SensorManageService {
         SensorType sensorType = sensorTypeRepository.findById(sensorManageRequest.getSensorTypeId()).orElseThrow(SensorTypeNotFoundException::new);
 
         sensorManage.update(sensorManageRequest, sensorPos, sensorType);
-        sensorManage.createSensorCode();
         return new SensorManageResponse(sensorManage);
     }
 

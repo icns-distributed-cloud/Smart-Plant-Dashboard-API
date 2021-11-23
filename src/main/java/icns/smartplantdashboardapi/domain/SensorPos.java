@@ -30,12 +30,10 @@ public class SensorPos {
     private String posCode;
 
     @Column
-    private LocalDateTime createdAt;
+    private String BackgroundImgPath;
 
-    @PrePersist
-    public void createdAt(){
-        this.createdAt = LocalDateTime.now();
-    }
+    @Column
+    private String SensorImgPath;
 
     public SensorPos update(SensorPosRequest sensorPosRequest){
         this.posName = sensorPosRequest.getPosName();
@@ -44,14 +42,4 @@ public class SensorPos {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "SensorPos{" +
-                "posId=" + posId +
-                ", posName='" + posName + '\'' +
-                ", posDtl='" + posDtl + '\'' +
-                ", posCode='" + posCode + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
-    }
 }

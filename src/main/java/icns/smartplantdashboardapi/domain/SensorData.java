@@ -20,7 +20,7 @@ public class SensorData {
     private Long dataId;
 
     @ManyToOne(targetEntity = SensorManage.class)
-    @JoinColumn(name = "sensormanage_id")
+    @JoinColumn(name = "ss_id")
     private SensorManage sensorManage;
 
     @Column
@@ -35,13 +35,4 @@ public class SensorData {
         this.createdAt = LocalDateTime.now();
     }
 
-    @Override
-    public String toString() {
-        return "SensorData{" +
-                "dataId=" + dataId +
-                ", sensorManage=" + sensorManage +
-                ", inputData=" + inputData +
-                ", createdAt=" + createdAt +
-                '}';
-    }
 }

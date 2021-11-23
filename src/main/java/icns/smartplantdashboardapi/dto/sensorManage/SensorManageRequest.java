@@ -18,8 +18,6 @@ public class SensorManageRequest {
     @NotEmpty
     private Long sensorTypeId;
 
-    private String ssDtl;
-
     private String ssContact;
 
     private String ssContactExt;
@@ -29,7 +27,6 @@ public class SensorManageRequest {
 
     public SensorManage toEntity(SensorPos sensorPos, SensorType sensorType){
         return SensorManage.builder()
-                .ssDtl(ssDtl)
                 .ssContact(ssContact)
                 .ssContactExt(ssContactExt)
                 .ssContactPhone(ssContactPhone)

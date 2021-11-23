@@ -11,6 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -71,4 +75,20 @@ public class SensorPosService {
         sensorPosRepository.deleteById(posId);
         return deleted;
     }
+
+    private String getFilePath(Long posId){
+        // set file name
+        String absolutePath = new File("").getAbsolutePath() + "/pos/";
+        String fileName = posId+".png";
+        String path = absolutePath + fileName;
+        return path;
+    }
+    @Transactional
+    public String updateBackgroundImg(Long posId, MultipartFile backgroundImg) throws IOException {
+        String path = getFilePath(posId);
+        File file = new File(path);
+        backgroundImg.transferTo(file);
+        return path;
+    }
+
 }
