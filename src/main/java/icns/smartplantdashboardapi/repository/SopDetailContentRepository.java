@@ -9,5 +9,7 @@ import java.util.List;
 
 public interface SopDetailContentRepository extends JpaRepository<SopDetailContent, Long> {
     List<SopDetailContent> findBySopDetail_Id(@Param(value="titleId") Long titleId);
+    List<SopDetailContent> deleteBySopDetail_Id(@Param(value="titleId") Long titleId);
+
 
 }

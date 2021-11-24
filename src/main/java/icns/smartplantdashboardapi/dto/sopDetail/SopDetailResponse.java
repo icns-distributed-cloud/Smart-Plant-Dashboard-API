@@ -19,6 +19,7 @@ public class SopDetailResponse {
 
     private String title;
 
+
     public SopDetailResponse(SopDetail sopDetail){
         this.id = sopDetail.getId();
         this.situationId = sopDetail.getSituation().getId();

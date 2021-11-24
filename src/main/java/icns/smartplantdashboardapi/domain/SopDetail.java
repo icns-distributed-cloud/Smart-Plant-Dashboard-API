@@ -23,14 +23,20 @@ public class SopDetail {
     private Situation situation;
 
     @Column
+    private Long nodeId;
+
+    @Column
     private Integer level;
 
     @Column
     private String title;
 
-    public SopDetail update(String title){
+    @Column
+    private float y;
+
+    public void update(String title, float y){
         this.title=title;
-        return this;
+        this.y = y;
     }
 
 

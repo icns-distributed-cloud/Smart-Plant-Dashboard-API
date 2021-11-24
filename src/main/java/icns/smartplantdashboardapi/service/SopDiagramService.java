@@ -1,12 +1,12 @@
 package icns.smartplantdashboardapi.service;
 
 import icns.smartplantdashboardapi.domain.Situation;
+import icns.smartplantdashboardapi.domain.SopDetail;
 import icns.smartplantdashboardapi.domain.SopDiagram;
-import icns.smartplantdashboardapi.domain.SopDetailTitleParse;
 import icns.smartplantdashboardapi.dto.sopDiagram.SopDiagramRequest;
 import icns.smartplantdashboardapi.dto.sopDiagram.SopDiagramResponse;
 import icns.smartplantdashboardapi.repository.SituationRepository;
-import icns.smartplantdashboardapi.repository.SopDetailTitleParseRepository;
+import icns.smartplantdashboardapi.repository.SopDetailRepository;
 import icns.smartplantdashboardapi.repository.SopDiagramRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -16,13 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class SopDiagramService {
     private final SopDiagramRepository sopDiagramRepository;
     private final SituationRepository situationRepository;
-    private final SopDetailTitleParseRepository sopDetailTitleParseRepository;
+    private final SopDetailRepository sopDetailRepository;
 
     private String getFilePath(Long situationId, Integer level){
         String absolutePath = new File("").getAbsolutePath() + "/sop-diagram/";
@@ -37,7 +38,6 @@ public class SopDiagramService {
         Situation situation = situationRepository.findById(sopDiagramRequest.getSituationId()).get();
         SopDiagram sopDiagram = sopDiagramRepository.findBySituationAndLevel(situation, sopDiagramRequest.getLevel()).get();
 
-        sopDetailTitleParseRepository.deleteBySituationAndLevel(situation, sopDiagramRequest.getLevel());
 
         // JSON Parsing
         JSONObject jsonObject = new JSONObject(sopDiagramRequest.getDiagram());
@@ -47,15 +47,22 @@ public class SopDiagramService {
             JSONObject styleObj = obj.getJSONObject("style");
             String text = styleObj.getString("text");
             JSONArray position = obj.getJSONArray("position");
+            Long nodeId = obj.getLong("id");
             float y = position.getFloat(1);
 
-            SopDetailTitleParse sopDetailTitleParse = SopDetailTitleParse.builder()
-                        .situation(situation)
+            Optional<SopDetail> sopDetail = sopDetailRepository.findByNodeId(nodeId);
+            if(sopDetail.isPresent()){
+                sopDetail.get().update(text,y);
+            }else{
+                SopDetail newSopDetail = SopDetail.builder()
                         .level(sopDiagramRequest.getLevel())
-                        .y(y)
+                        .situation(situation)
+                        .nodeId(nodeId)
                         .title(text)
+                        .y(y)
                         .build();
-            sopDetailTitleParseRepository.save(sopDetailTitleParse);
+                sopDetailRepository.save(newSopDetail);
+            }
 
         }
 
