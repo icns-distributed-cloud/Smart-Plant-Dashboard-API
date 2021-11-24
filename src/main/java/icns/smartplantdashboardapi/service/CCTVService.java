@@ -2,9 +2,11 @@ package icns.smartplantdashboardapi.service;
 
 import icns.smartplantdashboardapi.advice.exception.CCTVNotFoundException;
 import icns.smartplantdashboardapi.domain.CCTV;
-import icns.smartplantdashboardapi.dto.CCTV.CCTVRequest;
-import icns.smartplantdashboardapi.dto.CCTV.CCTVResponse;
+import icns.smartplantdashboardapi.domain.SensorPos;
+import icns.smartplantdashboardapi.dto.cctv.CCTVRequest;
+import icns.smartplantdashboardapi.dto.cctv.CCTVResponse;
 import icns.smartplantdashboardapi.repository.CCTVRepository;
+import icns.smartplantdashboardapi.repository.SensorPosRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CCTVService {
     private final CCTVRepository cctvRepository;
+    private final SensorPosRepository sensorPosRepository;
 
     @Transactional(readOnly = true)
     public Page<CCTVResponse> findAll(Pageable pageable){
@@ -24,7 +27,8 @@ public class CCTVService {
 
     @Transactional
     public Long save(CCTVRequest cctvRequest){
-        CCTV saved = cctvRepository.save(cctvRequest.toEntity());
+        SensorPos sensorPos = sensorPosRepository.findById(cctvRequest.getPosId()).get();
+        CCTV saved = cctvRepository.save(cctvRequest.toEntity(sensorPos));
         return saved.getCctvId();
     }
 

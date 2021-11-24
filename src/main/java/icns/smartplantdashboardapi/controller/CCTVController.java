@@ -1,11 +1,10 @@
 package icns.smartplantdashboardapi.controller;
 
 
-import icns.smartplantdashboardapi.dto.CCTV.CCTVRequest;
+import icns.smartplantdashboardapi.dto.cctv.CCTVRequest;
 import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
 import icns.smartplantdashboardapi.service.CCTVService;
-import icns.smartplantdashboardapi.service.SensorDataService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

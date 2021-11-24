@@ -19,13 +19,17 @@ public class CCTV {
     @Column
     private Long cctvId;
 
+    @ManyToOne(targetEntity = SensorPos.class, fetch=FetchType.LAZY)
+    @JoinColumn(name="sensorpos_id", nullable = false)
+    private SensorPos ssPos;
+
     @Column(nullable = true)
     private String userId;
 
     @Column(nullable = true)
     private String password;
 
-    @Column(nullable = true)  //나중에 unique = true
+    @Column(nullable = true)
     private String streamURL;
 
     @Column(nullable = true)
@@ -34,16 +38,6 @@ public class CCTV {
     @Column(nullable = true)
     private String cctvLocation;
 
-    @Override
-    public String toString(){
-        return "CCTV{" +
-                "cctvId=" + cctvId +
-                ", userId='" + userId + '\'' +
-                ", password='" + password + '\'' +
-                ", streamURL='" + streamURL + '\'' +
-                ", websocketURL=" + websocketURL + '\'' +
-                ", cctvLocation=" + cctvLocation +
-                '}';
-    }
+
 
 }

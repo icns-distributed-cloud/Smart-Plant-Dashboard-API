@@ -1,4 +1,4 @@
-package icns.smartplantdashboardapi.dto.CCTV;
+package icns.smartplantdashboardapi.dto.cctv;
 
 import icns.smartplantdashboardapi.domain.CCTV;
 import lombok.AllArgsConstructor;
@@ -17,6 +17,8 @@ public class CCTVResponse {
     private String streamURL;
     private String websocketURL;
     private String cctvLocation;
+    private Long posId;
+    private String posName;
 
     public CCTVResponse(CCTV cctv){
         this.cctvId = cctv.getCctvId();
@@ -25,6 +27,8 @@ public class CCTVResponse {
         this.streamURL = cctv.getStreamURL();
         this.websocketURL = cctv.getWebsocketURL();
         this.cctvLocation = cctv.getCctvLocation();
+        this.posId = cctv.getSsPos().getPosId();
+        this.posName = cctv.getSsPos().getPosName();
     }
 
 }
