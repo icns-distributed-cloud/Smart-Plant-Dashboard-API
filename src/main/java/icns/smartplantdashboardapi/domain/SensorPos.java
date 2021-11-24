@@ -30,16 +30,30 @@ public class SensorPos {
     private String posCode;
 
     @Column
-    private String BackgroundImgPath;
+    private String backgroundImgPath;
 
     @Column
-    private String SensorImgPath;
+    private String positionPath;
+
+    @Column
+    private String positionImgPath;
+
 
     public SensorPos update(SensorPosRequest sensorPosRequest){
         this.posName = sensorPosRequest.getPosName();
         this.posDtl = sensorPosRequest.getPosDtl();
         this.posCode = sensorPosRequest.getPosCode();
         return this;
+    }
+
+    public SensorPos updatePosition(String positionImgPath, String positionPath){
+        this.positionImgPath = positionImgPath;
+        this.positionPath = positionPath;
+        return this;
+    }
+
+    public void setBackgroundImgPath(String backgroundImgPath) {
+        this.backgroundImgPath = backgroundImgPath;
     }
 
 }

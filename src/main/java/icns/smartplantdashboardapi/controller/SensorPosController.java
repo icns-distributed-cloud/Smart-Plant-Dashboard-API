@@ -31,12 +31,12 @@ public class SensorPosController {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK,  sensorPosService.findAll(pageable)), null, HttpStatus.OK);
     }
     @PostMapping("/sensor-pos")
-    public ResponseEntity save(@RequestBody @Valid SensorPosRequest sensorPosRequest){
-        return new ResponseEntity(CommonResponse.res(StatusCode.CREATED, sensorPosService.save(sensorPosRequest)),null,HttpStatus.CREATED);
+    public ResponseEntity save(@RequestParam(value="posName") String posName, @RequestParam(value="posCode") String posCode,  @RequestParam(value="posDtl") String posDtl , @RequestParam(value = "backgroundImg") MultipartFile backgroundImg) throws IOException {
+        return new ResponseEntity(CommonResponse.res(StatusCode.CREATED, sensorPosService.save(posName, posCode, posDtl, backgroundImg)),null,HttpStatus.CREATED);
     }
 
     @GetMapping("/sensor-pos/{posId}")
-    public ResponseEntity findById(@PathVariable("posId") Long posId){
+    public ResponseEntity findById(@PathVariable("posId") Long posId) throws IOException{
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorPosService.findById(posId)),null, HttpStatus.OK);
     }
 
@@ -47,14 +47,21 @@ public class SensorPosController {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorPosService.updateById(posId, sensorPosRequest)),null,HttpStatus.OK);
     }
 
+    @PostMapping("/sensor-pos/background-img/{posId}")
+    public ResponseEntity updateBackgroundImg(
+            @PathVariable("posId") Long posId,
+            @RequestParam(value = "backgroundImg") MultipartFile backgroundImg) throws IOException {
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorPosService.updateBackgroundImg(posId, backgroundImg)),null,HttpStatus.OK);
+    }
+
     @DeleteMapping("/sensor-pos/{posId}")
     public ResponseEntity deleteById(@PathVariable("posId") Long posId){
         return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorPosService.deleteById(posId)),null, HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/sensor-pod/position/{posId}")
-    public ResponseEntity updateBackgroundImg(@PathVariable("posId") Long posId, @RequestParam(value = "backgroundImg") MultipartFile backgroundImg) throws IOException {
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorPosService.updateBackgroundImg(posId, backgroundImg)),null,HttpStatus.OK);
+    public ResponseEntity updatePosition(@PathVariable("posId") Long posId, @RequestParam(value="position") String position, @RequestParam(value = "positionImg") MultipartFile positionImg) throws IOException {
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorPosService.updatePosition(posId, position, positionImg)),null,HttpStatus.OK);
     }
 
 }
