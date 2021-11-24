@@ -26,7 +26,7 @@ public class SopDiagramService {
 
     private String getFilePath(Long situationId, Integer level){
         String absolutePath = new File("").getAbsolutePath() + "/sop-diagram/";
-        String fileName = situationId + "-" + level.toString() + ".text";
+        String fileName = situationId + "-" + level.toString() + ".txt";
 
         String path = absolutePath + fileName;
         return path;
