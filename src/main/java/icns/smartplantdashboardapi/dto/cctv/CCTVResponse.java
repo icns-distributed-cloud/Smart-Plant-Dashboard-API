@@ -16,7 +16,6 @@ public class CCTVResponse {
     private String password;
     private String streamURL;
     private String websocketURL;
-    private String cctvLocation;
     private Long posId;
     private String posName;
 
@@ -26,7 +25,6 @@ public class CCTVResponse {
         this.password = cctv.getPassword();
         this.streamURL = cctv.getStreamURL();
         this.websocketURL = cctv.getWebsocketURL();
-        this.cctvLocation = cctv.getCctvLocation();
         this.posId = cctv.getSsPos().getPosId();
         this.posName = cctv.getSsPos().getPosName();
     }

@@ -1,13 +1,17 @@
 package icns.smartplantdashboardapi.controller;
 
+import icns.smartplantdashboardapi.domain.User;
 import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
 import icns.smartplantdashboardapi.dto.sopDetail.SopDetailContentRequest;
+import icns.smartplantdashboardapi.repository.UserRepository;
 import icns.smartplantdashboardapi.service.SopDetailContentService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"e-SOP 디테일 콘텐츠 관리"})
@@ -17,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 public class SopDetailContentController {
 
     private final SopDetailContentService sopDetailContentService;
+    private final UserRepository userRepository;
+
 
     @PostMapping("/sop-detail/content")
     public ResponseEntity saveContent(@RequestBody SopDetailContentRequest sopDetailContentRequest){
@@ -44,8 +50,9 @@ public class SopDetailContentController {
     }
 
     @PutMapping("/sop-detail/content/complete/{contentId}")
-    public ResponseEntity complete(@PathVariable(value="contentId") Long contentId){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.complete(contentId)), null, HttpStatus.OK);
+    public ResponseEntity complete(@AuthenticationPrincipal UserDetails userDetails, @PathVariable(value="contentId") Long contentId){
+        User user = userRepository.findByEmail(userDetails.getUsername()).get();
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.complete(user, contentId)), null, HttpStatus.OK);
     }
 
     @PutMapping("/sop-detail/content/end")

@@ -20,8 +20,6 @@ public class CCTVRequest {
 
     private String streamURL;
 
-    private String cctvLocation;
-
     private String websocketURL;
 
 
@@ -31,7 +29,6 @@ public class CCTVRequest {
                 .ssPos(sensorPos)
                 .userId(userId)
                 .password(password)
-                .cctvLocation(cctvLocation)
                 .streamURL(streamURL)
                 .websocketURL(websocketURL)
                 .build();

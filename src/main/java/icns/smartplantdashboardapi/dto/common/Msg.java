@@ -7,5 +7,6 @@ public class Msg {
 
     public static final String DUPLICATE = "이미 존재하는 값입니다.";
     public static final String REQUEST_NOT_VALID = "요청 입력값이 올바르지 않습니다.";
+    public static final String NOTAUTHENTICATED = "사용자 인증이 필요합니다.";
 
 }

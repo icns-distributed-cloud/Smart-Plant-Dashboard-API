@@ -4,6 +4,7 @@ package icns.smartplantdashboardapi.service;
 import icns.smartplantdashboardapi.domain.Contact;
 import icns.smartplantdashboardapi.domain.SopDetailContent;
 import icns.smartplantdashboardapi.domain.SopMessageLog;
+import icns.smartplantdashboardapi.domain.User;
 import icns.smartplantdashboardapi.repository.ContactRepository;
 import icns.smartplantdashboardapi.repository.SopDetailContentRepository;
 import icns.smartplantdashboardapi.repository.SopMessageLogRepository;
@@ -37,7 +38,7 @@ public class SopMessageService {
     private String phone;
 
 
-    public Long sendMessage(Long contentId){
+    public Long sendMessage(User user, Long contentId){
         SopDetailContent sopDetailContent = sopDetailContentRepository.findById(contentId).get();
         List<Contact> contactList = contactRepository.findBySsPos_PosId(sopDetailContent.getSsPos().getPosId());
 
@@ -63,7 +64,7 @@ public class SopMessageService {
                 System.out.println(obj.toString());
                 SopMessageLog sopMessageLog = SopMessageLog.builder()
                         .send(true)
-                        .sender("관리자")
+                        .sender(user.getName())
                         .receiver(contact.getName())
                         .text(sopDetailContent.getMessageContent())
                         .build();
@@ -73,7 +74,7 @@ public class SopMessageService {
                 System.out.println(e.getCode());
                 SopMessageLog sopMessageLog = SopMessageLog.builder()
                         .send(false)
-                        .sender("관리자")
+                        .sender(user.getName())
                         .receiver(contact.getName())
                         .text(sopDetailContent.getMessageContent())
                         .build();

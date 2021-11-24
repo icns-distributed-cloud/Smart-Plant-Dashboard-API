@@ -35,8 +35,6 @@ public class CCTV {
     @Column(nullable = true)
     private String websocketURL;
 
-    @Column(nullable = true)
-    private String cctvLocation;
 
 
 
