@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = {"e-SOP 관리"})
+@Api(tags = {"e-SOP 디테일 관리"})
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -53,30 +53,6 @@ public class SopDetailController {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailService.findTitleParseList(situationId, level)), null, HttpStatus.OK);
     }
 
-    // content
 
-    @PostMapping("/sop-detail/content")
-    public ResponseEntity saveContent(@RequestBody SopDetailContentRequest sopDetailContentRequest){
-        return new ResponseEntity(CommonResponse.res(StatusCode.CREATED, sopDetailContentService.save(sopDetailContentRequest)),null, HttpStatus.OK);
-    }
 
-    @PutMapping("/sop-detail/content/{contentId}")
-    public ResponseEntity updateContent(@PathVariable(value="contentId") Long contentId, @RequestBody SopDetailContentRequest sopDetailContentRequest){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.update(contentId, sopDetailContentRequest)),null, HttpStatus.OK);
-    }
-
-    @GetMapping("/sop-detail/content/{contentId}")
-    public ResponseEntity findContent(@PathVariable(value="contentId") Long contentId){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.find(contentId)),null, HttpStatus.OK);
-    }
-
-    @GetMapping("/sop-detail/content")
-    public ResponseEntity findAllContent(@RequestParam(value="titleId") Long titleId){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.findAll(titleId)),null, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/sop-detail/content/{contentId}")
-    public ResponseEntity deleteContent(@PathVariable(value="contentId") Long contentId){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.delete(contentId)), null, HttpStatus.OK);
-    }
 }

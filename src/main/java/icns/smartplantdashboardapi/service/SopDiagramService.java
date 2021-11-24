@@ -1,17 +1,13 @@
 package icns.smartplantdashboardapi.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import icns.smartplantdashboardapi.advice.exception.SensorTypeNotFoundException;
-import icns.smartplantdashboardapi.domain.SensorType;
 import icns.smartplantdashboardapi.domain.Situation;
-import icns.smartplantdashboardapi.domain.Sop;
+import icns.smartplantdashboardapi.domain.SopDiagram;
 import icns.smartplantdashboardapi.domain.SopDetailTitleParse;
-import icns.smartplantdashboardapi.dto.sop.SopRequest;
-import icns.smartplantdashboardapi.dto.sop.SopResponse;
-import icns.smartplantdashboardapi.repository.SensorTypeRepository;
+import icns.smartplantdashboardapi.dto.sopDiagram.SopDiagramRequest;
+import icns.smartplantdashboardapi.dto.sopDiagram.SopDiagramResponse;
 import icns.smartplantdashboardapi.repository.SituationRepository;
 import icns.smartplantdashboardapi.repository.SopDetailTitleParseRepository;
-import icns.smartplantdashboardapi.repository.SopRepository;
+import icns.smartplantdashboardapi.repository.SopDiagramRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.json.JSONArray;
@@ -20,12 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class SopService {
-    private final SopRepository sopRepository;
+public class SopDiagramService {
+    private final SopDiagramRepository sopDiagramRepository;
     private final SituationRepository situationRepository;
     private final SopDetailTitleParseRepository sopDetailTitleParseRepository;
 
@@ -38,14 +33,14 @@ public class SopService {
     }
 
     @Transactional
-    public Long updateDiagram(SopRequest sopRequest) throws IOException {
-        Situation situation = situationRepository.findById(sopRequest.getSituationId()).get();
-        Sop sop = sopRepository.findBySituationAndLevel(situation, sopRequest.getLevel()).get();
+    public Long updateDiagram(SopDiagramRequest sopDiagramRequest) throws IOException {
+        Situation situation = situationRepository.findById(sopDiagramRequest.getSituationId()).get();
+        SopDiagram sopDiagram = sopDiagramRepository.findBySituationAndLevel(situation, sopDiagramRequest.getLevel()).get();
 
-        sopDetailTitleParseRepository.deleteBySituationAndLevel(situation, sopRequest.getLevel());
+        sopDetailTitleParseRepository.deleteBySituationAndLevel(situation, sopDiagramRequest.getLevel());
 
         // JSON Parsing
-        JSONObject jsonObject = new JSONObject(sopRequest.getDiagram());
+        JSONObject jsonObject = new JSONObject(sopDiagramRequest.getDiagram());
         JSONArray jsonArray = jsonObject.getJSONArray("node");
         for (int i=0;i<jsonArray.length();i++){
             JSONObject obj = jsonArray.getJSONObject(i);
@@ -56,7 +51,7 @@ public class SopService {
 
             SopDetailTitleParse sopDetailTitleParse = SopDetailTitleParse.builder()
                         .situation(situation)
-                        .level(sopRequest.getLevel())
+                        .level(sopDiagramRequest.getLevel())
                         .y(y)
                         .title(text)
                         .build();
@@ -65,27 +60,27 @@ public class SopService {
         }
 
         // Save File
-        String diagramPath = getFilePath(sopRequest.getSituationId(), sopRequest.getLevel());
+        String diagramPath = getFilePath(sopDiagramRequest.getSituationId(), sopDiagramRequest.getLevel());
         FileWriter fileWriter = new FileWriter(diagramPath);
-        fileWriter.write(sopRequest.getDiagram());
+        fileWriter.write(sopDiagramRequest.getDiagram());
         fileWriter.close();
 
-        sop.update(diagramPath);
-        return sop.getId();
+        sopDiagram.update(diagramPath);
+        return sopDiagram.getId();
     }
 
     @Transactional(readOnly = true)
-    public SopResponse findDiagram(Long situationId,Integer level) throws IOException{
+    public SopDiagramResponse findDiagram(Long situationId, Integer level) throws IOException{
         Situation situation = situationRepository.findById(situationId).get();
-        Sop sop = sopRepository.findBySituationAndLevel(situation, level).get();
-        if(sop.getDiagramPath() == null){
-            return new SopResponse(sop, null);
+        SopDiagram sopDiagram = sopDiagramRepository.findBySituationAndLevel(situation, level).get();
+        if(sopDiagram.getDiagramPath() == null){
+            return new SopDiagramResponse(sopDiagram, null);
         }else{
             BufferedReader bufferedReader = new BufferedReader(
-                    new FileReader(sop.getDiagramPath())
+                    new FileReader(sopDiagram.getDiagramPath())
             );
             String diagram = bufferedReader.readLine();
-            return new SopResponse(sop, diagram);
+            return new SopDiagramResponse(sopDiagram, diagram);
         }
 
 

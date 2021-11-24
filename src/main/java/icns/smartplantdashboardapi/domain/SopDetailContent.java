@@ -38,13 +38,19 @@ public class SopDetailContent {
     @Column
     private boolean complete;
 
-
     public SopDetailContent update(SopDetailContentRequest sopDetailContentRequest, SensorPos sensorPos){
         text = sopDetailContentRequest.getText();
         message = sopDetailContentRequest.isMessage();
         ssPos = sensorPos;
         messageContent=sopDetailContentRequest.getMessageContent();
         return this;
+    }
+
+    public void completeTrue(){
+        complete = true;
+    }
+    public void completeFalse(){
+        complete = false;
     }
 
 }
