@@ -1,7 +1,5 @@
 package icns.smartplantdashboardapi.domain;
 
-import icns.smartplantdashboardapi.dto.sensorPos.SensorPosRequest;
-import icns.smartplantdashboardapi.dto.sop.SopRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Sop {
+public class SopDiagram {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -30,7 +28,7 @@ public class Sop {
     @Column
     private String diagramPath;
 
-    public Sop update(String diagramPath){
+    public SopDiagram update(String diagramPath){
         this.diagramPath = diagramPath;
         return this;
     }

@@ -1,6 +1,5 @@
 package icns.smartplantdashboardapi.dto.sopDetail;
 
-import icns.smartplantdashboardapi.domain.Sop;
 import icns.smartplantdashboardapi.domain.SopDetail;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

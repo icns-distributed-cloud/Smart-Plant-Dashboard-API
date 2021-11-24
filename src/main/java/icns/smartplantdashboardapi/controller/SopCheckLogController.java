@@ -2,26 +2,25 @@ package icns.smartplantdashboardapi.controller;
 
 import icns.smartplantdashboardapi.dto.common.CommonResponse;
 import icns.smartplantdashboardapi.dto.common.StatusCode;
-import icns.smartplantdashboardapi.service.MessageService;
+import icns.smartplantdashboardapi.service.SopCheckLogService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = {"e-SOP 메시지"})
+@Api(tags = {"e-SOP 체크 로그"})
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class MessageController {
+public class SopCheckLogController {
 
-    private final MessageService messageService;
+    private final SopCheckLogService sopCheckLogService;
 
-    @PostMapping("/message")
-    public ResponseEntity sendMessage(){
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, messageService.sendMessage()),null, HttpStatus.OK);
+    @GetMapping("/e-sop/check-log")
+    public ResponseEntity findAll(){
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopCheckLogService.findAll()),null, HttpStatus.OK);
     }
-
 }

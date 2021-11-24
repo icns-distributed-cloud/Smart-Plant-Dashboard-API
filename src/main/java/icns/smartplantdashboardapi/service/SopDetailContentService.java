@@ -1,13 +1,9 @@
 package icns.smartplantdashboardapi.service;
 
-import icns.smartplantdashboardapi.domain.SensorPos;
-import icns.smartplantdashboardapi.domain.SopDetail;
-import icns.smartplantdashboardapi.domain.SopDetailContent;
+import icns.smartplantdashboardapi.domain.*;
 import icns.smartplantdashboardapi.dto.sopDetail.SopDetailContentRequest;
 import icns.smartplantdashboardapi.dto.sopDetail.SopDetailContentResponse;
-import icns.smartplantdashboardapi.repository.SensorPosRepository;
-import icns.smartplantdashboardapi.repository.SopDetailContentRepository;
-import icns.smartplantdashboardapi.repository.SopDetailRepository;
+import icns.smartplantdashboardapi.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +18,8 @@ public class SopDetailContentService {
     private final SopDetailRepository sopDetailRepository;
     private final SensorPosRepository sensorPosRepository;
     private final SopDetailContentRepository sopDetailContentRepository;
+    private final SopCheckLogRepository sopCheckLogRepository;
+    private final SituationRepository situationRepository;
 
     @Transactional
     public Long save( SopDetailContentRequest sopDetailContentRequest){
@@ -72,5 +70,34 @@ public class SopDetailContentService {
     public Long delete(Long contentId){
         sopDetailContentRepository.deleteById(contentId);
         return contentId;
+    }
+
+    @Transactional
+    public Long complete(Long contentId){
+        SopDetailContent sopDetailContent = sopDetailContentRepository.findById(contentId).get();
+        sopDetailContent.completeTrue();
+
+        SopCheckLog sopCheckLog = SopCheckLog.builder()
+                                        .text(sopDetailContent.getText())
+                                        .situation(sopDetailContent.getSopDetail().getSituation().getName())
+                                        .level(sopDetailContent.getSopDetail().getLevel())
+                                        .user("관리자")
+                                        .build();
+        sopCheckLogRepository.save(sopCheckLog);
+        return contentId;
+    }
+
+    @Transactional
+    public boolean endSop(Long situationId, Integer level){
+        Situation situation = situationRepository.findById(situationId).get();
+        List<SopDetail> sopDetailList = sopDetailRepository.findBySituationAndLevel(situation, level);
+        for(SopDetail sopDetail : sopDetailList){
+            List<SopDetailContent> sopDetailContentList = sopDetailContentRepository.findBySopDetail_Id(sopDetail.getId());
+
+            for(SopDetailContent sopDetailContent : sopDetailContentList){
+                sopDetailContent.completeFalse();
+            }
+        }
+        return true;
     }
 }

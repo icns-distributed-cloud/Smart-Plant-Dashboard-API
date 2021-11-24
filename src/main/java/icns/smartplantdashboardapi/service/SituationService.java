@@ -1,11 +1,11 @@
 package icns.smartplantdashboardapi.service;
 
 import icns.smartplantdashboardapi.domain.Situation;
-import icns.smartplantdashboardapi.domain.Sop;
+import icns.smartplantdashboardapi.domain.SopDiagram;
 import icns.smartplantdashboardapi.dto.situation.SituationRequest;
 import icns.smartplantdashboardapi.dto.situation.SituationResponse;
 import icns.smartplantdashboardapi.repository.SituationRepository;
-import icns.smartplantdashboardapi.repository.SopRepository;
+import icns.smartplantdashboardapi.repository.SopDiagramRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,18 +17,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SituationService {
     private final SituationRepository situationRepository;
-    private final SopRepository sopRepository;
+    private final SopDiagramRepository sopDiagramRepository;
 
     @Transactional
     public Long save(SituationRequest situationRequest){
         Situation saved =  situationRepository.save(situationRequest.toEntity());
         for(int i=1;i<=4;i++){
-            Sop sop = Sop.builder()
+            SopDiagram sopDiagram = SopDiagram.builder()
                     .level(i)
                     .situation(saved)
                     .diagramPath(null)
                     .build();
-            sopRepository.save(sop);
+            sopDiagramRepository.save(sopDiagram);
         }
         return saved.getId();
     }
@@ -56,7 +56,7 @@ public class SituationService {
     public Long delete(Long situationId){
         Situation situation = situationRepository.findById(situationId).get();
         for(Integer i=1;i<=4;i++){
-            sopRepository.deleteBySituationAndLevel(situation,i);
+            sopDiagramRepository.deleteBySituationAndLevel(situation,i);
 
         }
         situationRepository.deleteById(situationId);
