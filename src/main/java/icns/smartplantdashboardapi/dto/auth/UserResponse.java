@@ -11,11 +11,17 @@ import lombok.NoArgsConstructor;
 public class UserResponse {
     private String email;
 
+    private String name;
+
+    private String phone;
+
     private Long id;
 
     public UserResponse(User user) {
         this.email = user.getEmail();
         this.id = user.getId();
+        this.name = user.getName();
+        this.phone = user.getPhone();
     }
 
 
