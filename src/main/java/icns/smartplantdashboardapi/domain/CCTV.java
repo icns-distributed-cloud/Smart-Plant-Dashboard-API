@@ -35,6 +35,9 @@ public class CCTV {
     @Column(nullable = true)
     private String websocketURL;
 
+    @Column
+    private String abnormalWebsocketUrl;
+
 
 
 
