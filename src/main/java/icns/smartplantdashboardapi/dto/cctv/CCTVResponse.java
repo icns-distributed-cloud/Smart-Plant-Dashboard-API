@@ -18,6 +18,7 @@ public class CCTVResponse {
     private String websocketURL;
     private Long posId;
     private String posName;
+    private String abnormalWebsocketUrl;
 
     public CCTVResponse(CCTV cctv){
         this.cctvId = cctv.getCctvId();
@@ -27,6 +28,7 @@ public class CCTVResponse {
         this.websocketURL = cctv.getWebsocketURL();
         this.posId = cctv.getSsPos().getPosId();
         this.posName = cctv.getSsPos().getPosName();
+        this.abnormalWebsocketUrl = cctv.getAbnormalWebsocketUrl();
     }
 
 }

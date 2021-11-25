@@ -21,6 +21,7 @@ public class CCTVRequest {
     private String streamURL;
 
     private String websocketURL;
+    private String abnormalWebsocketUrl;
 
 
 
@@ -31,6 +32,7 @@ public class CCTVRequest {
                 .password(password)
                 .streamURL(streamURL)
                 .websocketURL(websocketURL)
+                .abnormalWebsocketUrl(abnormalWebsocketUrl)
                 .build();
     }
 
