@@ -31,7 +31,7 @@ public class SensorPosController {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK,  sensorPosService.findAll(pageable)), null, HttpStatus.OK);
     }
     @PostMapping("/sensor-pos")
-    public ResponseEntity save(@RequestParam(value="posName") String posName, @RequestParam(value="posCode") String posCode,  @RequestParam(value="posDtl") String posDtl , @RequestParam(value = "backgroundImg") MultipartFile backgroundImg) throws IOException {
+    public ResponseEntity save(@RequestParam(value="posName", required = true) String posName, @RequestParam(value="posCode", required = true) String posCode,  @RequestParam(value="posDtl", required = true) String posDtl , @RequestParam(value = "backgroundImg", required = true) MultipartFile backgroundImg) throws IOException {
         return new ResponseEntity(CommonResponse.res(StatusCode.CREATED, sensorPosService.save(posName, posCode, posDtl, backgroundImg)),null,HttpStatus.CREATED);
     }
 
@@ -59,8 +59,8 @@ public class SensorPosController {
         return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorPosService.deleteById(posId)),null, HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/sensor-pod/position/{posId}")
-    public ResponseEntity updatePosition(@PathVariable("posId") Long posId, @RequestParam(value="position") String position, @RequestParam(value = "positionImg") MultipartFile positionImg) throws IOException {
+    @PostMapping("/sensor-pos/position/{posId}")
+    public ResponseEntity updatePosition(@PathVariable("posId") Long posId, @RequestParam(value="position") String position, @RequestParam(value = "positionImg", required = true) MultipartFile positionImg) throws IOException {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorPosService.updatePosition(posId, position, positionImg)),null,HttpStatus.OK);
     }
 
