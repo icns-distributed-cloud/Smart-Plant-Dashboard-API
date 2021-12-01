@@ -28,8 +28,12 @@ public class SopDiagram {
     @Column
     private String diagramPath;
 
-    public SopDiagram update(String diagramPath){
+    @Column
+    private String diagramImgPath;
+
+    public SopDiagram update(String diagramPath, String diagramImgPath){
         this.diagramPath = diagramPath;
+        this.diagramImgPath = diagramImgPath;
         return this;
     }
 

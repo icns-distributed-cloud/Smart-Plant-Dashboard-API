@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -20,15 +21,14 @@ import java.io.IOException;
 public class SopDiagramController {
     private final SopDiagramService sopDiagramService;
 
-    @PostMapping("/sop")
-    public ResponseEntity updateDiagram(@RequestBody SopDiagramRequest sopDiagramRequest) throws IOException{
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDiagramService.updateDiagram(sopDiagramRequest)), null, HttpStatus.OK);
-    }
-
     @GetMapping("/sop")
     public ResponseEntity findDiagram(@RequestParam("situationId") Long situationId, @RequestParam("level") Integer level) throws IOException{
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDiagramService.findDiagram(situationId, level)),null,HttpStatus.OK);
     }
 
+    @PostMapping("/sop")
+    public ResponseEntity updatePosition(@RequestParam("situationId") Long situationId, @RequestParam(value="level") Integer level, @RequestParam(value = "diagram") String diagram,  @RequestParam(value = "diagramImg", required = true) MultipartFile diagramImg) throws IOException {
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDiagramService.updateDiagram(situationId, level, diagram, diagramImg)),null,HttpStatus.OK);
+    }
 
 }
