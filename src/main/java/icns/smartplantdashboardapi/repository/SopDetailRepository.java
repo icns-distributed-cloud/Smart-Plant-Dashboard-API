@@ -2,7 +2,6 @@ package icns.smartplantdashboardapi.repository;
 
 import icns.smartplantdashboardapi.domain.Situation;
 import icns.smartplantdashboardapi.domain.SopDetail;
-import icns.smartplantdashboardapi.domain.SopDetailTitleParse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
