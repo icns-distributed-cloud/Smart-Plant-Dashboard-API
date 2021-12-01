@@ -7,11 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SopDetailContentRequest {
     private Long titleId;
+
+    @NotEmpty
     private String text;
     private boolean message;
     private Long posId;

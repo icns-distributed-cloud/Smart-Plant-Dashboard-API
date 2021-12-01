@@ -61,6 +61,7 @@ public class SensorPosController {
 
     @PostMapping("/sensor-pos/position/{posId}")
     public ResponseEntity updatePosition(@PathVariable("posId") Long posId, @RequestParam(value="position") String position, @RequestParam(value = "positionImg", required = true) MultipartFile positionImg) throws IOException {
+        System.out.println(position);
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorPosService.updatePosition(posId, position, positionImg)),null,HttpStatus.OK);
     }
 

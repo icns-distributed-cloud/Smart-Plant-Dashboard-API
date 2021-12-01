@@ -16,6 +16,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,5 +76,13 @@ public class SensorDataService {
         SensorManage sensorManage = sensorManageRepository.findById(ssId).get();
         SensorData sensorData = sensorDataRepository.findTop1BySensorManageOrderByCreatedAtDesc(sensorManage);
         return new SocketSensorDataResponse(sensorData);
+    }
+
+    @Transactional
+    public List<SensorData> clearOldData(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime oneMonthAgo = now.minusMinutes(5);
+        List<SensorData> deleted = sensorDataRepository.deleteByCreatedAtLessThan(oneMonthAgo);
+        return deleted;
     }
 }
