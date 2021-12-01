@@ -44,14 +44,9 @@ public class SopDetailContentService {
             SensorPos sensorPos = sensorPosRepository.findById(sopDetailContentRequest.getPosId()).get();
             sopDetailContent.update(sopDetailContentRequest, sensorPos);
         }else{
-
             sopDetailContent.update(sopDetailContentRequest, null);
-
-
-
         }
 
-        SensorPos sensorPos = sensorPosRepository.findById(sopDetailContentRequest.getPosId()).get();
         return sopDetailContent.getId();
     }
     @Transactional(readOnly = true)

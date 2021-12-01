@@ -104,10 +104,13 @@ public class SensorPosService {
         File file = new File(positionImgPath);
         backgroundImg.transferTo(file);
 
+        System.out.println(position);
         String positionPath = getPositionPath(posId);
         FileWriter fileWriter = new FileWriter(positionPath);
         fileWriter.write(position);
         fileWriter.close();
+
+
 
         sensorPos.updatePosition(positionImgPath, positionPath);
 

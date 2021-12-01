@@ -28,4 +28,8 @@ public class SensorDataController {
     public ResponseEntity findByPosId(@RequestParam Long posId){
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorDataService.findByPosId(posId)), null, HttpStatus.OK);
     }
+    @DeleteMapping("/sensor-data/clear")
+    public ResponseEntity clear(){
+        return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorDataService.clearOldData()), null, HttpStatus.NOT_FOUND);
+    }
 }
