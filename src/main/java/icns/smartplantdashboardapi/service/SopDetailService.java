@@ -3,7 +3,6 @@ package icns.smartplantdashboardapi.service;
 import icns.smartplantdashboardapi.domain.Situation;
 import icns.smartplantdashboardapi.domain.SopDetail;
 import icns.smartplantdashboardapi.dto.sopDetail.SopDetailResponse;
-import icns.smartplantdashboardapi.dto.sopDetail.SopDetailTitleParseResponse;
 import icns.smartplantdashboardapi.repository.SituationRepository;
 import icns.smartplantdashboardapi.repository.SopDetailContentRepository;
 import icns.smartplantdashboardapi.repository.SopDetailRepository;
