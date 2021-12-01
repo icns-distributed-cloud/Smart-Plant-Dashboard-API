@@ -14,12 +14,14 @@ public class SopDiagramRequest {
     private Long situationId;
     private Integer level;
     private String diagram;
+    private String diagramImgPath;
 
-    public SopDiagram toEntity(Situation situation, String diagramPath){
+    public SopDiagram toEntity(Situation situation, String diagramPath, String diagramImgPath){
         return SopDiagram.builder()
                 .situation(situation)
                 .level(level)
                 .diagramPath(diagramPath)
+                .diagramImgPath(diagramImgPath)
                 .build();
     }
 }

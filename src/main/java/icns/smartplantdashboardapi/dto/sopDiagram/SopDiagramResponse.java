@@ -16,14 +16,16 @@ public class SopDiagramResponse {
     private String situationName;
     private Integer level;
     private String diagram;
+    private String diagramImgPath;
 
 
-    public SopDiagramResponse(SopDiagram sopDiagram, String diagram){
+    public SopDiagramResponse(SopDiagram sopDiagram, String diagram, String diagramImgPath){
         this.id = sopDiagram.getId();
         this.situationId = sopDiagram.getSituation().getId();
         this.situationName = sopDiagram.getSituation().getName();
         this.level = sopDiagram.getLevel();
         this.diagram = diagram;
+        this.diagramImgPath = diagramImgPath;
     }
 
 }

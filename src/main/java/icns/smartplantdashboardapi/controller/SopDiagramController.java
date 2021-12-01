@@ -27,8 +27,8 @@ public class SopDiagramController {
     }
 
     @PostMapping("/sop")
-    public ResponseEntity updatePosition(@RequestParam("situationId") Long situationId, @RequestParam(value="level") Integer level, @RequestParam(value = "diagram") String diagram) throws IOException {
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDiagramService.updateDiagram(situationId, level, diagram)),null,HttpStatus.OK);
+    public ResponseEntity updatePosition(@RequestParam("situationId") Long situationId, @RequestParam(value="level") Integer level, @RequestParam(value = "diagram") String diagram,  @RequestParam(value = "diagramImg", required = true) MultipartFile diagramImg) throws IOException {
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDiagramService.updateDiagram(situationId, level, diagram, diagramImg)),null,HttpStatus.OK);
     }
 
 }

@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.Optional;
@@ -33,11 +34,22 @@ public class SopDiagramService {
         return path;
     }
 
+    private String getDiagramImgPath(Long situationId, Integer level){
+        String absolutePath = new File("").getAbsolutePath() + "/sop-diagram/";
+        String fileName = situationId + "-" + level.toString() + "-img.png";
+        String path = absolutePath + fileName;
+        return path;
+    }
+
     @Transactional
-    public Long updateDiagram(Long situationId, Integer level, String diagram) throws IOException {
+    public Long updateDiagram(Long situationId, Integer level, String diagram, MultipartFile diagramImg) throws IOException {
         Situation situation = situationRepository.findById(situationId).get();
         SopDiagram sopDiagram = sopDiagramRepository.findBySituationAndLevel(situation, level).get();
 
+
+        String diagramImgPath = getDiagramImgPath(situationId, level);
+        File file = new File(diagramImgPath);
+        diagramImg.transferTo(file);
 
         // JSON Parsing
         JSONObject jsonObject = new JSONObject(diagram);
@@ -72,7 +84,7 @@ public class SopDiagramService {
         fileWriter.write(diagram);
         fileWriter.close();
 
-        sopDiagram.update(diagramPath);
+        sopDiagram.update(diagramPath, diagramImgPath);
         return sopDiagram.getId();
     }
 
@@ -81,13 +93,13 @@ public class SopDiagramService {
         Situation situation = situationRepository.findById(situationId).get();
         SopDiagram sopDiagram = sopDiagramRepository.findBySituationAndLevel(situation, level).get();
         if(sopDiagram.getDiagramPath() == null){
-            return new SopDiagramResponse(sopDiagram, null);
+            return new SopDiagramResponse(sopDiagram, null, null);
         }else{
             BufferedReader bufferedReader = new BufferedReader(
                     new FileReader(sopDiagram.getDiagramPath())
             );
             String diagram = bufferedReader.readLine();
-            return new SopDiagramResponse(sopDiagram, diagram);
+            return new SopDiagramResponse(sopDiagram, diagram, sopDiagram.getDiagramImgPath());
         }
 
 
