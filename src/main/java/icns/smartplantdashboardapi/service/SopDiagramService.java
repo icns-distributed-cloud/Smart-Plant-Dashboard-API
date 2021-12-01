@@ -34,13 +34,13 @@ public class SopDiagramService {
     }
 
     @Transactional
-    public Long updateDiagram(SopDiagramRequest sopDiagramRequest) throws IOException {
-        Situation situation = situationRepository.findById(sopDiagramRequest.getSituationId()).get();
-        SopDiagram sopDiagram = sopDiagramRepository.findBySituationAndLevel(situation, sopDiagramRequest.getLevel()).get();
+    public Long updateDiagram(Long situationId, Integer level, String diagram) throws IOException {
+        Situation situation = situationRepository.findById(situationId).get();
+        SopDiagram sopDiagram = sopDiagramRepository.findBySituationAndLevel(situation, level).get();
 
 
         // JSON Parsing
-        JSONObject jsonObject = new JSONObject(sopDiagramRequest.getDiagram());
+        JSONObject jsonObject = new JSONObject(diagram);
         JSONArray jsonArray = jsonObject.getJSONArray("node");
         for (int i=0;i<jsonArray.length();i++){
             JSONObject obj = jsonArray.getJSONObject(i);
@@ -55,7 +55,7 @@ public class SopDiagramService {
                 sopDetail.get().update(text,y);
             }else{
                 SopDetail newSopDetail = SopDetail.builder()
-                        .level(sopDiagramRequest.getLevel())
+                        .level(level)
                         .situation(situation)
                         .nodeId(nodeId)
                         .title(text)
@@ -67,9 +67,9 @@ public class SopDiagramService {
         }
 
         // Save File
-        String diagramPath = getFilePath(sopDiagramRequest.getSituationId(), sopDiagramRequest.getLevel());
+        String diagramPath = getFilePath(situationId, level);
         FileWriter fileWriter = new FileWriter(diagramPath);
-        fileWriter.write(sopDiagramRequest.getDiagram());
+        fileWriter.write(diagram);
         fileWriter.close();
 
         sopDiagram.update(diagramPath);
