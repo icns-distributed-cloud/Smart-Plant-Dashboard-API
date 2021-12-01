@@ -30,6 +30,6 @@ public class SensorDataController {
     }
     @DeleteMapping("/sensor-data/clear")
     public ResponseEntity clear(){
-        return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorDataService.clearOldData()), null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorDataService.clearOldData()), null, HttpStatus.NO_CONTENT);
     }
 }
