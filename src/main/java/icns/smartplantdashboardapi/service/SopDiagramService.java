@@ -56,25 +56,31 @@ public class SopDiagramService {
         JSONArray jsonArray = jsonObject.getJSONArray("node");
         for (int i=0;i<jsonArray.length();i++){
             JSONObject obj = jsonArray.getJSONObject(i);
-            JSONObject styleObj = obj.getJSONObject("style");
-            String text = styleObj.getString("text");
-            JSONArray position = obj.getJSONArray("position");
-            Long nodeId = obj.getLong("id");
-            float y = position.getFloat(1);
+            String type = obj.getString("type");
+            if(!type.equals("text")){
+                JSONObject styleObj = obj.getJSONObject("style");
+                String text = styleObj.getString("text");
+                JSONArray position = obj.getJSONArray("position");
+                Long nodeId = obj.getLong("id");
+                float y = position.getFloat(1);
 
-            Optional<SopDetail> sopDetail = sopDetailRepository.findByNodeId(nodeId);
-            if(sopDetail.isPresent()){
-                sopDetail.get().update(text,y);
-            }else{
-                SopDetail newSopDetail = SopDetail.builder()
-                        .level(level)
-                        .situation(situation)
-                        .nodeId(nodeId)
-                        .title(text)
-                        .y(y)
-                        .build();
-                sopDetailRepository.save(newSopDetail);
+                Optional<SopDetail> sopDetail = sopDetailRepository.findByNodeId(nodeId);
+                if(sopDetail.isPresent()){
+                    sopDetail.get().update(text,y);
+                }else{
+                    SopDetail newSopDetail = SopDetail.builder()
+                            .level(level)
+                            .situation(situation)
+                            .nodeId(nodeId)
+                            .title(text)
+                            .y(y)
+                            .build();
+                    sopDetailRepository.save(newSopDetail);
+                }
             }
+
+
+
 
         }
 
