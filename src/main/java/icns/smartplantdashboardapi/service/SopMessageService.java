@@ -4,7 +4,6 @@ package icns.smartplantdashboardapi.service;
 import icns.smartplantdashboardapi.domain.Contact;
 import icns.smartplantdashboardapi.domain.SopDetailContent;
 import icns.smartplantdashboardapi.domain.SopMessageLog;
-import icns.smartplantdashboardapi.domain.User;
 import icns.smartplantdashboardapi.repository.ContactRepository;
 import icns.smartplantdashboardapi.repository.SopDetailContentRepository;
 import icns.smartplantdashboardapi.repository.SopMessageLogRepository;
@@ -13,6 +12,8 @@ import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +39,7 @@ public class SopMessageService {
     private String phone;
 
 
-    public Long sendMessage(User user, Long contentId){
+    public Long sendMessage(String name, Long contentId){
         SopDetailContent sopDetailContent = sopDetailContentRepository.findById(contentId).get();
         List<Contact> contactList = contactRepository.findBySsPos_PosId(sopDetailContent.getSsPos().getPosId());
 
@@ -63,7 +64,7 @@ public class SopMessageService {
                 System.out.println(obj.toString());
                 SopMessageLog sopMessageLog = SopMessageLog.builder()
                         .send(true)
-                        .sender(user.getName())
+                        .sender(name)
                         .receiver(contact.getName())
                         .text(sopDetailContent.getMessageContent())
                         .build();
@@ -74,7 +75,7 @@ public class SopMessageService {
                 System.out.println(e.getCode());
                 SopMessageLog sopMessageLog = SopMessageLog.builder()
                         .send(false)
-                        .sender(user.getName())
+                        .sender(name)
                         .receiver(contact.getName())
                         .text(sopDetailContent.getMessageContent())
                         .build();
@@ -88,8 +89,8 @@ public class SopMessageService {
 
 
     @Transactional(readOnly = true)
-    public List<SopMessageLog> findAll(){
-        List<SopMessageLog> messageLogList = sopMessageLogRepository.findAll();
+    public Page<SopMessageLog> findAll(Pageable pageable){
+        Page<SopMessageLog> messageLogList = sopMessageLogRepository.findAll(pageable);
         return messageLogList;
     }
 }
