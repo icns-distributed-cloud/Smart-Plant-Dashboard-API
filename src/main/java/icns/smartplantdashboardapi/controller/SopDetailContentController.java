@@ -50,9 +50,10 @@ public class SopDetailContentController {
     }
 
     @PutMapping("/sop-detail/content/complete/{contentId}")
-    public ResponseEntity complete(@AuthenticationPrincipal UserDetails userDetails, @PathVariable(value="contentId") Long contentId){
-        User user = userRepository.findByEmail(userDetails.getUsername()).get();
-        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.complete(user, contentId)), null, HttpStatus.OK);
+    public ResponseEntity complete( @PathVariable(value="contentId") Long contentId){ //@AuthenticationPrincipal UserDetails userDetails,
+        //User user = userRepository.findByEmail(userDetails.getUsername()).get();
+        //return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.complete(user, contentId)), null, HttpStatus.OK);
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sopDetailContentService.complete("관리자", contentId)), null, HttpStatus.OK);
     }
 
     @PutMapping("/sop-detail/content/end")

@@ -68,17 +68,21 @@ public class SopDetailContentService {
     }
 
     @Transactional
-    public Long complete(User user, Long contentId){
+    public Long complete(String name, Long contentId){ //User user
         SopDetailContent sopDetailContent = sopDetailContentRepository.findById(contentId).get();
-        sopDetailContent.completeTrue();
+        if(sopDetailContent.isComplete()){
+            sopDetailContent.completeFalse();
+        }else{
+            sopDetailContent.completeTrue();
 
-        SopCheckLog sopCheckLog = SopCheckLog.builder()
-                                        .text(sopDetailContent.getText())
-                                        .situation(sopDetailContent.getSopDetail().getSituation().getName())
-                                        .level(sopDetailContent.getSopDetail().getLevel())
-                                        .user(user.getName())
-                                        .build();
-        sopCheckLogRepository.save(sopCheckLog);
+            SopCheckLog sopCheckLog = SopCheckLog.builder()
+                    .text(sopDetailContent.getText())
+                    .situation(sopDetailContent.getSopDetail().getSituation().getName())
+                    .level(sopDetailContent.getSopDetail().getLevel())
+                    .user(name)
+                    .build();
+            sopCheckLogRepository.save(sopCheckLog);
+        }
         return contentId;
     }
 
