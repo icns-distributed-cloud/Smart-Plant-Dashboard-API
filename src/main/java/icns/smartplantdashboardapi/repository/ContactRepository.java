@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface ContactRepository extends JpaRepository<Contact, Long> {
     Page<Contact> findBySsPos_PosId(@Param(value="posId") Long posId, Pageable pageable);
-    List<Contact> findBySsPos_PosId(@Param(value="posId") Long posId);
+    List<Contact> findBySsPos_PosIdAndLevelLessThanEqual(@Param(value="posId") Long posId, @Param(value="level") Integer level);
+
 
 }

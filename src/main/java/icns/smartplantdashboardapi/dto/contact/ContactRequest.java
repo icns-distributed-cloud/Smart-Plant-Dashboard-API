@@ -13,11 +13,13 @@ public class ContactRequest {
     private String name;
     private String phone;
     private Long posId;
+    private Integer level;
 
     public Contact toEntity(SensorPos sensorPos){
         return Contact.builder()
                 .name(name)
                 .phone(phone)
+                .level(level)
                 .ssPos(sensorPos)
                 .build();
     }

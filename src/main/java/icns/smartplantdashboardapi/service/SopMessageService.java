@@ -2,10 +2,12 @@ package icns.smartplantdashboardapi.service;
 
 
 import icns.smartplantdashboardapi.domain.Contact;
+import icns.smartplantdashboardapi.domain.SopDetail;
 import icns.smartplantdashboardapi.domain.SopDetailContent;
 import icns.smartplantdashboardapi.domain.SopMessageLog;
 import icns.smartplantdashboardapi.repository.ContactRepository;
 import icns.smartplantdashboardapi.repository.SopDetailContentRepository;
+import icns.smartplantdashboardapi.repository.SopDetailRepository;
 import icns.smartplantdashboardapi.repository.SopMessageLogRepository;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
@@ -27,6 +29,7 @@ public class SopMessageService {
     private final ContactRepository contactRepository;
     private final SopMessageLogRepository sopMessageLogRepository;
     private final SopDetailContentRepository sopDetailContentRepository;
+    private final SopDetailRepository sopDetailRepository;
 
 
     @Value("${icns.app.coolsms.apikey}")
@@ -41,7 +44,7 @@ public class SopMessageService {
 
     public Long sendMessage(String name, Long contentId){
         SopDetailContent sopDetailContent = sopDetailContentRepository.findById(contentId).get();
-        List<Contact> contactList = contactRepository.findBySsPos_PosId(sopDetailContent.getSsPos().getPosId());
+        List<Contact> contactList = contactRepository.findBySsPos_PosIdAndLevelLessThanEqual(sopDetailContent.getSsPos().getPosId(), sopDetailContent.getSopDetail().getLevel());
 
         for(Contact contact : contactList){
             String api_key = apiKey;
