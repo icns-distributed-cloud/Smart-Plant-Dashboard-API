@@ -15,7 +15,7 @@ public class SopDetailContentResponse {
     private boolean complete;
     private Long posId;
     private String posName;
-    private Integer function;
+    private Integer efunction;
     private String info;
 
 
@@ -24,14 +24,14 @@ public class SopDetailContentResponse {
         this.titleId = sopDetailContent.getSopDetail().getId();
         this.text = sopDetailContent.getText();
         this.complete = sopDetailContent.isComplete();
-        this.function = sopDetailContent.getEfunc();
+        this.efunction = sopDetailContent.getEfunction();
 
-        if(sopDetailContent.getEfunc()==1 || sopDetailContent.getEfunc() == 2){
+        if(sopDetailContent.getEfunction()==1 || sopDetailContent.getEfunction() == 2){
             this.posId = sopDetailContent.getSsPos().getPosId();
             this.posName = sopDetailContent.getSsPos().getPosName();
             this.info = sopDetailContent.getInfo();
 
-        }else if(sopDetailContent.getEfunc() == 0){
+        }else if(sopDetailContent.getEfunction() == 0){
             this.posId = null;
             this.posName = null;
             this.info = null;

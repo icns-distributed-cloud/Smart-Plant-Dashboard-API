@@ -30,7 +30,7 @@ public class SopDetailContent {
     private String text;
 
     @Column
-    private Integer efunc;
+    private Integer efunction;
 
     @Column(nullable = true)
     private String info;
@@ -40,7 +40,7 @@ public class SopDetailContent {
 
     public SopDetailContent update(SopDetailContentRequest sopDetailContentRequest, SensorPos sensorPos){
         text = sopDetailContentRequest.getText();
-        efunc = sopDetailContentRequest.getFunction();
+        efunction = sopDetailContentRequest.getEfunction();
         ssPos = sensorPos;
         info=sopDetailContentRequest.getInfo();
         return this;
