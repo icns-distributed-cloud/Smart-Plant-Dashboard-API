@@ -23,11 +23,13 @@ public class SopDetailContentService {
 
     @Transactional
     public Long save( SopDetailContentRequest sopDetailContentRequest){
+        System.out.println(sopDetailContentRequest.getFunction());
+        System.out.println(sopDetailContentRequest.toString());
         SopDetail sopDetail = sopDetailRepository.findById(sopDetailContentRequest.getTitleId()).get();
 
 
         SopDetailContent sopDetailContent;
-        if(sopDetailContentRequest.isMessage()){
+        if(sopDetailContentRequest.getFunction()==1 || sopDetailContentRequest.getFunction()==2){
             SensorPos sensorPos = sensorPosRepository.findById(sopDetailContentRequest.getPosId()).get();
             sopDetailContent = sopDetailContentRepository.save(sopDetailContentRequest.toEntity(sopDetail, sensorPos));
 
@@ -40,7 +42,7 @@ public class SopDetailContentService {
     @Transactional
     public Long update(Long contentId, SopDetailContentRequest sopDetailContentRequest){
         SopDetailContent sopDetailContent = sopDetailContentRepository.findById(contentId).get();
-        if(sopDetailContentRequest.isMessage()){
+        if(sopDetailContentRequest.getFunction()==1 || sopDetailContentRequest.getFunction()==2){
             SensorPos sensorPos = sensorPosRepository.findById(sopDetailContentRequest.getPosId()).get();
             sopDetailContent.update(sopDetailContentRequest, sensorPos);
         }else{

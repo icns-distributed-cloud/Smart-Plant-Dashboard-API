@@ -3,15 +3,12 @@ package icns.smartplantdashboardapi.controller;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
-import org.codehaus.plexus.util.IOUtil;
-import org.springframework.core.io.FileSystemResourceLoader;
-import org.springframework.core.io.ResourceLoader;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;

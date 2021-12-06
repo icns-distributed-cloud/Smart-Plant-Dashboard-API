@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class SopDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
     @ManyToOne(targetEntity = Situation.class, fetch=FetchType.LAZY)

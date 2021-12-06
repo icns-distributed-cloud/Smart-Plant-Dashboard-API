@@ -25,6 +25,12 @@ public class Contact {
     @Column
     private String name;
 
+    @Column
+    private Integer level;
+
+    @Column
+    private String email;
+
     @ManyToOne(targetEntity = SensorPos.class, fetch=FetchType.LAZY)
     @JoinColumn(name="sensorpos_id", nullable = false)
     private SensorPos ssPos;
@@ -33,6 +39,8 @@ public class Contact {
         this.name = contactRequest.getName();
         this.phone = contactRequest.getPhone();
         this.ssPos = sensorPos;
+        this.level = contactRequest.getLevel();
+        this.email = contactRequest.getEmail();
         return this;
     }
 

@@ -16,6 +16,8 @@ public class ContactResponse {
     private String phone;
     private Long posId;
     private String posName;
+    private Integer level;
+    private String email;
 
     public ContactResponse(Contact contact){
         this.id = contact.getId();
@@ -23,6 +25,8 @@ public class ContactResponse {
         this.phone = contact.getPhone();
         this.posId = contact.getSsPos().getPosId();
         this.posName = contact.getSsPos().getPosName();
+        this.level = contact.getLevel();
+        this.email = contact.getEmail();
 
     }
 }
