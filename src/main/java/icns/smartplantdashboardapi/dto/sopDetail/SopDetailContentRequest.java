@@ -17,7 +17,7 @@ public class SopDetailContentRequest {
 
     @NotEmpty
     private String text;
-    private Integer function;
+    private Integer efunction;
     private Long posId;
     private String info;
 
@@ -27,7 +27,7 @@ public class SopDetailContentRequest {
                 .sopDetail(sopDetail)
                 .text(text)
                 .complete(false)
-                .efunc(function)
+                .efunction(efunction)
                 .ssPos(sensorPos)
                 .info(info)
                 .build();
