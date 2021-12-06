@@ -5,3 +5,4 @@ INSERT INTO sensor_type(type_code, type_dtl, type_name, type_color_code, display
 INSERT INTO sensor_type(type_code, type_dtl, type_name, type_color_code, display, unit) values('CC', '이산화탄소 센서', 'CO2', '#2196f3', 1, "ppm");
 INSERT INTO sensor_type(type_code, type_dtl, type_name, type_color_code, display, unit) values('C', '일산화탄소 센서', 'CO', '#673ab7',1, "ppm");
 
+

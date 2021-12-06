@@ -14,6 +14,7 @@ public class ContactRequest {
     private String phone;
     private Long posId;
     private Integer level;
+    private String email;
 
     public Contact toEntity(SensorPos sensorPos){
         return Contact.builder()

@@ -16,7 +16,6 @@ import javax.persistence.*;
 public class SopDetailContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
 
     @ManyToOne(targetEntity = SopDetail.class, fetch=FetchType.LAZY)
@@ -30,19 +29,20 @@ public class SopDetailContent {
     @Column
     private String text;
 
-    private boolean message;
+    @Column
+    private Integer efunc;
 
     @Column(nullable = true)
-    private String messageContent;
+    private String info;
 
     @Column
     private boolean complete;
 
     public SopDetailContent update(SopDetailContentRequest sopDetailContentRequest, SensorPos sensorPos){
         text = sopDetailContentRequest.getText();
-        message = sopDetailContentRequest.isMessage();
+        efunc = sopDetailContentRequest.getFunction();
         ssPos = sensorPos;
-        messageContent=sopDetailContentRequest.getMessageContent();
+        info=sopDetailContentRequest.getInfo();
         return this;
     }
 

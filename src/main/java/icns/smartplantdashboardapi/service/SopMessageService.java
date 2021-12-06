@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,14 +43,18 @@ public class SopMessageService {
     private String phone;
 
 
-    public Long sendMessage(String name, Long contentId){
+    public List<String> sendMessage(String name, Long contentId){
         SopDetailContent sopDetailContent = sopDetailContentRepository.findById(contentId).get();
         List<Contact> contactList = contactRepository.findBySsPos_PosIdAndLevelLessThanEqual(sopDetailContent.getSsPos().getPosId(), sopDetailContent.getSopDetail().getLevel());
+
+        List<String> phoneList = new ArrayList<>();
 
         for(Contact contact : contactList){
             String api_key = apiKey;
             String api_secret = apiSecret;
             Message coolsms = new Message(api_key, api_secret);
+
+            phoneList.add(contact.getPhone());
 
 
             HashMap<String, String> params = new HashMap<String, String>();
@@ -57,7 +62,7 @@ public class SopMessageService {
             params.put("to", contact.getPhone());
             params.put("from", phone);
             params.put("type", "SMS");
-            params.put("text", sopDetailContent.getMessageContent());
+            params.put("text", sopDetailContent.getInfo());
             params.put("app_version", "test app 1.2");
 
 
@@ -69,7 +74,7 @@ public class SopMessageService {
                         .send(true)
                         .sender(name)
                         .receiver(contact.getName())
-                        .text(sopDetailContent.getMessageContent())
+                        .text(sopDetailContent.getInfo())
                         .build();
                 sopMessageLogRepository.save(sopMessageLog);
 
@@ -80,14 +85,14 @@ public class SopMessageService {
                         .send(false)
                         .sender(name)
                         .receiver(contact.getName())
-                        .text(sopDetailContent.getMessageContent())
+                        .text(sopDetailContent.getInfo())
                         .build();
                 sopMessageLogRepository.save(sopMessageLog);
             }
         }
 
 
-        return contentId;
+        return phoneList;
     }
 
 
