@@ -37,6 +37,8 @@ public class MailService {
 
         for(Contact contact : contactList){
             toUserList.add(contact.getEmail());
+
+
         }
 
         int toUserSize = toUserList.size();
@@ -45,11 +47,27 @@ public class MailService {
 
         simpleMailMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
 
-        simpleMailMessage.setSubject("테스트 메일 제목 상황 : "+sopDetailContent.getSopDetail().getSituation().getName()+" 레벨 : "+sopDetailContent.getSopDetail().getLevel().toString());
+        simpleMailMessage.setSubject("[테스트 메일] 상황 : "+sopDetailContent.getSopDetail().getSituation().getName()+", 레벨 : "+sopDetailContent.getSopDetail().getLevel().toString());
 
         simpleMailMessage.setText(sopDetailContent.getInfo());
 
         javaMailSender.send(simpleMailMessage);
+
+        for(Contact contact : contactList){
+            toUserList.add(contact.getEmail());
+
+            MailLog mailLog = MailLog.builder()
+                    .send(true)
+                    .sender(name)
+                    .receiver(contact.getName())
+                    .text(sopDetailContent.getInfo())
+                    .build();
+            mailLogRepository.save(mailLog);
+
+
+        }
+
+
         return toUserList;
     }
 

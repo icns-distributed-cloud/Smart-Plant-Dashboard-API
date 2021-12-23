@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = {"이메일 전송"})
+@Api(tags = {"e-SOP 이메일 전송"})
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

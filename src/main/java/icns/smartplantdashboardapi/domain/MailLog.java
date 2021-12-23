@@ -22,10 +22,7 @@ public class MailLog {
     private String sender;
 
     @Column
-    private String title;
-
-    @Column
-    private String content;
+    private String text;
 
     @Column
     private String receiver;
