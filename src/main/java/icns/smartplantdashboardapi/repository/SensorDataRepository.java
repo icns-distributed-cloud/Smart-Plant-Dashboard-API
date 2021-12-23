@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SensorDataRepository extends JpaRepository<SensorData, Long> {
-    List<SensorData> findBySensorManage_SsPos(@Param(value="ssPos")SensorPos ssPos);
+    List<SensorData> findBySensorManage_SsPosOrderByCreatedAtDesc(@Param(value="ssPos")SensorPos ssPos);
     SensorData findTop1BySensorManageOrderByCreatedAtDesc(@Param(value="sensorManage") SensorManage sensorManage);
     List<SensorData> deleteByCreatedAtLessThan(LocalDateTime threshold);
 }

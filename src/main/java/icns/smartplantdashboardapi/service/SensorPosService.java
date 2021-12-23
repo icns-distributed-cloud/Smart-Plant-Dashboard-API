@@ -25,17 +25,6 @@ public class SensorPosService {
         Page<SensorPosResponse> sensorPosList = sensorPosRepository.findAll(pageable).map(SensorPosResponse::new);
         return sensorPosList;
     }
-    /*
-    @Transactional(readOnly = true)
-    public List<SensorPosResponse> findAll(){
-        return sensorPosRepository.findAll()
-                .stream()
-                .map(SensorPosResponse::new)
-                .collect(Collectors.toList());
-    }
-     */
-
-
 
     @Transactional
     public Long save(String posName, String posCode, String posDtl, MultipartFile backgroundImg) throws IOException{

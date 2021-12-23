@@ -22,6 +22,7 @@ public class ContactRequest {
                 .phone(phone)
                 .level(level)
                 .ssPos(sensorPos)
+                .email(email)
                 .build();
     }
 }

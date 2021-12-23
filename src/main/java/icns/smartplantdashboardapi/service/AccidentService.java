@@ -45,6 +45,6 @@ public class AccidentService {
 
     @Transactional(readOnly = true)
     public List<AccidentResponse> findAll(){
-        return accidentRepository.findAll().stream().map(AccidentResponse::new).collect(Collectors.toList());
+        return accidentRepository.findAllByOrderByCreatedAtDesc().stream().map(AccidentResponse::new).collect(Collectors.toList());
     }
 }

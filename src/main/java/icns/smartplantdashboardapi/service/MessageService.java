@@ -2,13 +2,12 @@ package icns.smartplantdashboardapi.service;
 
 
 import icns.smartplantdashboardapi.domain.Contact;
-import icns.smartplantdashboardapi.domain.SopDetail;
 import icns.smartplantdashboardapi.domain.SopDetailContent;
-import icns.smartplantdashboardapi.domain.SopMessageLog;
+import icns.smartplantdashboardapi.domain.MessageLog;
 import icns.smartplantdashboardapi.repository.ContactRepository;
 import icns.smartplantdashboardapi.repository.SopDetailContentRepository;
 import icns.smartplantdashboardapi.repository.SopDetailRepository;
-import icns.smartplantdashboardapi.repository.SopMessageLogRepository;
+import icns.smartplantdashboardapi.repository.MessageLogRepository;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -25,12 +24,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SopMessageService {
+public class MessageService {
 
     private final ContactRepository contactRepository;
-    private final SopMessageLogRepository sopMessageLogRepository;
+    private final MessageLogRepository messageLogRepository;
     private final SopDetailContentRepository sopDetailContentRepository;
-    private final SopDetailRepository sopDetailRepository;
 
 
     @Value("${icns.app.coolsms.apikey}")
@@ -70,24 +68,24 @@ public class SopMessageService {
             try {
                 JSONObject obj = (JSONObject) coolsms.send(params);
                 System.out.println(obj.toString());
-                SopMessageLog sopMessageLog = SopMessageLog.builder()
+                MessageLog messageLog = MessageLog.builder()
                         .send(true)
                         .sender(name)
                         .receiver(contact.getName())
                         .text(sopDetailContent.getInfo())
                         .build();
-                sopMessageLogRepository.save(sopMessageLog);
+                messageLogRepository.save(messageLog);
 
             } catch (CoolsmsException e) {
                 System.out.println(e.getMessage());
                 System.out.println(e.getCode());
-                SopMessageLog sopMessageLog = SopMessageLog.builder()
+                MessageLog messageLog = MessageLog.builder()
                         .send(false)
                         .sender(name)
                         .receiver(contact.getName())
                         .text(sopDetailContent.getInfo())
                         .build();
-                sopMessageLogRepository.save(sopMessageLog);
+                messageLogRepository.save(messageLog);
             }
         }
 
@@ -97,8 +95,8 @@ public class SopMessageService {
 
 
     @Transactional(readOnly = true)
-    public Page<SopMessageLog> findAll(Pageable pageable){
-        Page<SopMessageLog> messageLogList = sopMessageLogRepository.findAll(pageable);
+    public Page<MessageLog> findAll(Pageable pageable){
+        Page<MessageLog> messageLogList = messageLogRepository.findAll(pageable);
         return messageLogList;
     }
 }

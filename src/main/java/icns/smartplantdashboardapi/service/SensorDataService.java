@@ -68,7 +68,7 @@ public class SensorDataService {
     @Transactional(readOnly = true)
     public List<SensorDataResponse> findByPosId(Long posId){
         SensorPos ssPos = sensorPosRepository.findById(posId).orElseThrow(SensorPosNotFoundException::new);
-        return sensorDataRepository.findBySensorManage_SsPos(ssPos).stream().map(SensorDataResponse::new).collect(Collectors.toList());
+        return sensorDataRepository.findBySensorManage_SsPosOrderByCreatedAtDesc(ssPos).stream().map(SensorDataResponse::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
