@@ -5,13 +5,14 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SopMessageLog {
+public class MailLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,10 @@ public class SopMessageLog {
     private String sender;
 
     @Column
-    private String text;
+    private String title;
+
+    @Column
+    private String content;
 
     @Column
     private String receiver;

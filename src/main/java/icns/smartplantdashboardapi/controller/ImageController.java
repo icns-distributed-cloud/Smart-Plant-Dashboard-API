@@ -25,6 +25,7 @@ public class ImageController {
     public ResponseEntity showImage(@RequestParam String path) throws IOException {
         InputStream in = new FileInputStream(path);
         byte[] imageByteArray = IOUtils.toByteArray(in);
+        in.close();
         return new ResponseEntity(imageByteArray, null, HttpStatus.OK);
     }
 }
