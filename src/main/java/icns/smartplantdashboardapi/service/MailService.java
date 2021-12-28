@@ -54,7 +54,6 @@ public class MailService {
         javaMailSender.send(simpleMailMessage);
 
         for(Contact contact : contactList){
-            toUserList.add(contact.getEmail());
 
             MailLog mailLog = MailLog.builder()
                     .send(true)

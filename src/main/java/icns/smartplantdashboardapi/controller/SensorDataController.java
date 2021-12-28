@@ -20,7 +20,7 @@ public class SensorDataController {
     private final SensorDataService sensorDataService;
 
     @PostMapping("/sensor-data")
-    public ResponseEntity save(@RequestBody SensorDataRequest sensorDataRequest){
+    public ResponseEntity save(@RequestBody SensorDataRequest sensorDataRequest) throws Exception{
         return new ResponseEntity(CommonResponse.res(StatusCode.CREATED, sensorDataService.save(sensorDataRequest)),null, HttpStatus.CREATED);
     }
 

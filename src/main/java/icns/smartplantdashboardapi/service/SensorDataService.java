@@ -29,7 +29,7 @@ public class SensorDataService {
     private final AbnormalDetectionRepository abnormalDetectionRepository;
     private final SimpMessageSendingOperations messageSendingOperations;
     @Transactional
-    public Long save(SensorDataRequest sensorDataRequest){
+    public Long save(SensorDataRequest sensorDataRequest) throws Exception{
         SensorManage sensorManage = sensorManageRepository.findById(sensorDataRequest.getSensorManageId()).orElseThrow(SensorManageNotFoundException::new);
 
         // update sensor state
@@ -46,7 +46,7 @@ public class SensorDataService {
     }
 
     @Transactional
-    public void detectAbnormal(Integer pastState, SensorManage sensorManage){
+    public void detectAbnormal(Integer pastState, SensorManage sensorManage) throws Exception {
 
         Integer currState = sensorManage.getSensorState();
         if(pastState == null){

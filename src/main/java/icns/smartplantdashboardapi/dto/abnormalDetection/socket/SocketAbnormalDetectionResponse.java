@@ -26,6 +26,8 @@ public class SocketAbnormalDetectionResponse {
 
     private String typeName;
 
+    private Long typeId;
+
 
     public SocketAbnormalDetectionResponse(AbnormalDetection abnormalDetection){
         this.createdAt = abnormalDetection.getCreatedAt();
@@ -34,6 +36,7 @@ public class SocketAbnormalDetectionResponse {
         this.ssCode = abnormalDetection.getSensorManage().createSensorCode();
         this.posName = abnormalDetection.getSensorManage().getSsPos().getPosName();
         this.typeName = abnormalDetection.getSensorManage().getSsType().getTypeName();
+        this.typeId = abnormalDetection.getSensorManage().getSsType().getTypeId();
     }
 
 
