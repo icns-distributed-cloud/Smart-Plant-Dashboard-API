@@ -36,7 +36,7 @@ public class SensorDataController {
 
     @PostMapping("/sensor-data/save-csv")
     public ResponseEntity saveCsv(@RequestParam(value="month",required = true) Long month) throws IOException {
-        return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorDataService.saveCsv(month)), null, HttpStatus.NO_CONTENT);
+        return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorDataService.saveCsv(month)), null, HttpStatus.OK);
     }
 
 }
