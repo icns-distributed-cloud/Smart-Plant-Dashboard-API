@@ -5,6 +5,7 @@ import icns.smartplantdashboardapi.dto.common.StatusCode;
 import icns.smartplantdashboardapi.dto.sensorData.SensorDataRequest;
 import icns.smartplantdashboardapi.service.SensorDataService;
 import io.swagger.annotations.Api;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,13 @@ public class SensorDataController {
         return new ResponseEntity(CommonResponse.res(StatusCode.OK, sensorDataService.findByPosId(posId)), null, HttpStatus.OK);
     }
     @DeleteMapping("/sensor-data/clear")
-    public ResponseEntity clear(){
-        return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorDataService.clearOldData()), null, HttpStatus.NO_CONTENT);
+    public ResponseEntity clear(@RequestParam(value="month", required = true) Long month){
+        return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorDataService.clearOldData(month)), null, HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping("/sensor-data/save-csv")
+    public ResponseEntity saveCsv(@RequestParam(value="month",required = true) Long month) throws IOException {
+        return new ResponseEntity(CommonResponse.res(StatusCode.NO_CONTENT, sensorDataService.saveCsv(month)), null, HttpStatus.NO_CONTENT);
+    }
+
 }

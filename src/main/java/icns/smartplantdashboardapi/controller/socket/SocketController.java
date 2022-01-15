@@ -19,13 +19,13 @@ public class SocketController {
 
     @MessageMapping("/receive/{ssId}")
     @SendTo("/send/{ssId}")
-    public SocketSensorDataResponse SocketHandler(@DestinationVariable Long ssId){
+    public SocketSensorDataResponse SocketHandler(@DestinationVariable Long ssId) throws Exception{
         return sensorDataService.sendData(ssId);
     }
 
     @MessageMapping("/check")
     @SendTo("/alert")
-    public SocketAbnormalDetectionResponse abnormalSocketHandler(SocketAbnormalDetectionResponse socketAbnormalDetectionResponse){
+    public SocketAbnormalDetectionResponse abnormalSocketHandler(SocketAbnormalDetectionResponse socketAbnormalDetectionResponse) throws Exception{
         return socketAbnormalDetectionResponse;
 
     }

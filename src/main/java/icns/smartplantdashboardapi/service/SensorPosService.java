@@ -29,6 +29,7 @@ public class SensorPosService {
     @Transactional
     public Long save(String posName, String posCode, String posDtl, MultipartFile backgroundImg) throws IOException{
 
+
         SensorPos sensorPos = SensorPos.builder()
                                     .posName(posName)
                                     .positionImgPath(null)

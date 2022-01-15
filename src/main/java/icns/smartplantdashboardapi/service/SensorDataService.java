@@ -11,6 +11,10 @@ import icns.smartplantdashboardapi.repository.AbnormalDetectionRepository;
 import icns.smartplantdashboardapi.repository.SensorDataRepository;
 import icns.smartplantdashboardapi.repository.SensorManageRepository;
 import icns.smartplantdashboardapi.repository.SensorPosRepository;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
@@ -72,17 +76,57 @@ public class SensorDataService {
     }
 
     @Transactional(readOnly = true)
-    public SocketSensorDataResponse sendData(Long ssId){
+    public SocketSensorDataResponse sendData(Long ssId) throws Exception{
         SensorManage sensorManage = sensorManageRepository.findById(ssId).get();
         SensorData sensorData = sensorDataRepository.findTop1BySensorManageOrderByCreatedAtDesc(sensorManage);
         return new SocketSensorDataResponse(sensorData);
     }
 
     @Transactional
-    public List<SensorData> clearOldData(){
+    public List<SensorData> clearOldData(Long month){
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime oneMonthAgo = now.minusMinutes(5);
-        List<SensorData> deleted = sensorDataRepository.deleteByCreatedAtLessThan(oneMonthAgo);
+        LocalDateTime threshold = now.minusMonths(month);
+        System.out.println(threshold);
+
+        List<SensorData> deleted = sensorDataRepository.deleteByCreatedAtLessThan(threshold);
         return deleted;
+    }
+
+    @Transactional(readOnly = true)
+    public String saveCsv(Long month) throws IOException {
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime threshold = now.minusMonths(month);
+        System.out.println(threshold);
+        String fileName = now.toString()+"-"+month.toString()+"ago.csv";
+        String csvPath = new File("").getAbsolutePath() + "/data-csv/"+fileName;
+
+
+        BufferedWriter fw = new BufferedWriter(new FileWriter(csvPath, true));
+
+        List<SensorData> sensorDataList = sensorDataRepository.findByCreatedAtGreaterThan(threshold);
+
+        fw.write("no,날짜,구역,센서,식별코드,데이터");
+        fw.newLine();
+
+        int cnt = 1;
+        for (SensorData sensorData : sensorDataList){
+            fw.write(cnt+","
+                +sensorData.getCreatedAt()+","
+                + sensorData.getSensorManage().getSsPos().getPosName()+","
+                +sensorData.getSensorManage().getSsType().getTypeName()+","
+                +sensorData.getSensorManage().createSensorCode()+","
+                +sensorData.getInputData()
+            );
+            fw.newLine();
+            cnt++;
+        }
+        fw.flush();
+
+        fw.close();
+
+
+        return "save success";
+
     }
 }

@@ -14,4 +14,5 @@ public interface SensorDataRepository extends JpaRepository<SensorData, Long> {
     List<SensorData> findBySensorManage_SsPosOrderByCreatedAtDesc(@Param(value="ssPos")SensorPos ssPos);
     SensorData findTop1BySensorManageOrderByCreatedAtDesc(@Param(value="sensorManage") SensorManage sensorManage);
     List<SensorData> deleteByCreatedAtLessThan(LocalDateTime threshold);
+    List<SensorData> findByCreatedAtGreaterThan(LocalDateTime threshold);
 }
