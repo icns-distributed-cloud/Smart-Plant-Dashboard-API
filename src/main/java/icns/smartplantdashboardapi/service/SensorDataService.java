@@ -76,7 +76,7 @@ public class SensorDataService {
     }
 
     @Transactional(readOnly = true)
-    public SocketSensorDataResponse sendData(Long ssId){
+    public SocketSensorDataResponse sendData(Long ssId) throws Exception{
         SensorManage sensorManage = sensorManageRepository.findById(ssId).get();
         SensorData sensorData = sensorDataRepository.findTop1BySensorManageOrderByCreatedAtDesc(sensorManage);
         return new SocketSensorDataResponse(sensorData);
