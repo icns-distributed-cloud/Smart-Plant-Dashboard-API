@@ -14,4 +14,7 @@ import java.util.List;
 public interface AbnormalDetectionRepository extends JpaRepository<AbnormalDetection, Long>{
     Page<AbnormalDetection> findBySensorManage_SsPos_PosId(@Param(value="posId") Long posId, Pageable pageable);
 
+    List<AbnormalDetection> findBySensorManage_SsPos_PosId(@Param(value="posId") Long posId);
+
+
 }
