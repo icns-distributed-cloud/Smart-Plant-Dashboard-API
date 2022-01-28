@@ -4,9 +4,12 @@ import icns.smartplantdashboardapi.advice.exception.SensorManageNotFoundExceptio
 import icns.smartplantdashboardapi.domain.AbnormalDetection;
 import icns.smartplantdashboardapi.domain.SensorManage;
 import icns.smartplantdashboardapi.dto.abnormalDetection.AbnormalDetectionRequest;
+import icns.smartplantdashboardapi.dto.abnormalDetection.AbnormalDetectionResponse;
 import icns.smartplantdashboardapi.dto.abnormalDetection.socket.SocketAbnormalDetectionResponse;
 import icns.smartplantdashboardapi.repository.AbnormalDetectionRepository;
 import icns.smartplantdashboardapi.repository.SensorManageRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,13 +31,27 @@ public class AbnormalDetectionService {
     }
 
     @Transactional(readOnly = true)
-    public Page<SocketAbnormalDetectionResponse> find(Long posId, Pageable pageable){
-        Page<SocketAbnormalDetectionResponse> abnormalDetectionList;
+    public Page<AbnormalDetectionResponse> findPage(Long posId, Pageable pageable){
+        Page<AbnormalDetectionResponse> abnormalDetectionList;
 
         if(posId == null){
-            abnormalDetectionList = abnormalDetectionRepository.findAll(pageable).map(SocketAbnormalDetectionResponse::new);
+            abnormalDetectionList = abnormalDetectionRepository.findAll(pageable).map(AbnormalDetectionResponse::new);
         }else{
-            abnormalDetectionList = abnormalDetectionRepository.findBySensorManage_SsPos_PosId(posId, pageable).map(SocketAbnormalDetectionResponse::new);
+            abnormalDetectionList = abnormalDetectionRepository.findBySensorManage_SsPos_PosId(posId, pageable).map(AbnormalDetectionResponse::new);
+        }
+        return abnormalDetectionList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<AbnormalDetectionResponse> find(Long posId){
+        List<AbnormalDetectionResponse> abnormalDetectionList;
+
+        if(posId == null){
+            abnormalDetectionList = abnormalDetectionRepository.findAll().stream().map(AbnormalDetectionResponse::new).collect(
+                Collectors.toList());
+        }else{
+            abnormalDetectionList = abnormalDetectionRepository.findBySensorManage_SsPos_PosId(posId).stream().map(AbnormalDetectionResponse::new).collect(
+                Collectors.toList());
         }
         return abnormalDetectionList;
     }
